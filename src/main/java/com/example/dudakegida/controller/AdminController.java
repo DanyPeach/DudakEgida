@@ -35,7 +35,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         animalService.save(animal);
         List<Animal> list = animalService.findAll();
-        modelAndView.addObject("pets", list);
+        modelAndView.addObject("listOfPets", list);
         modelAndView.setViewName("allpets");
         return modelAndView;
     }

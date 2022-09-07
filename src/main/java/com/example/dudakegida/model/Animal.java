@@ -1,9 +1,6 @@
 package com.example.dudakegida.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "pets")
+@Getter
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,31 +23,4 @@ public class Animal {
     private boolean deasise;
     private String imgURL;
 
-    public Long getAnimalId() {
-        return animalId;
-    }
-
-    public String getAnimalName() {
-        return animalName;
-    }
-
-    public AnimalType getAnimalType() {
-        return animalType;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public boolean isDeasise() {
-        return deasise;
-    }
-
-    public String getImgURL() {
-        return imgURL;
-    }
 }

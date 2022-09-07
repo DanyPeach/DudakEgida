@@ -23,9 +23,5 @@ public class User {
     private String login;
     private String password;
     private boolean isActive;
-    @ElementCollection(targetClass = Role.class)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Set<Role> role;
+
 }
