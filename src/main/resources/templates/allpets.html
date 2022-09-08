@@ -12,6 +12,7 @@
             <h3 class="features-title font-alt">Ideas and concepts</h3>
 
             <tr th:each="pet : ${listOfPets}">
+
                 <td>
                     <span th:text="${pet.animalName}">Name</span>
                 </td>
@@ -21,9 +22,13 @@
                 </td>
                 <td><span th:text="${pet.sex}">Age</span>
                 </td>
+                <a th:href="@{/admin/hide/{id}(id=${pet.animalId})}">hide</a>
+                <a th:href="@{admin/deleteAnimal/{id}(id=${pet.animalId})}">mark as taken</a>
+                <br>
             </tr>
             <p>Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
         </div>
     </div>
+</div>
 </body>
 </html>

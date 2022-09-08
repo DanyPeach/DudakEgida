@@ -22,5 +22,7 @@ public class Animal {
     private String sex;
     private boolean deasise;
     private String imgURL;
-
+    @Column(name = "animal_status")
+    @Enumerated(EnumType.STRING)
+    private AnimalStatus animal_status;
 }

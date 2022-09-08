@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,6 +23,24 @@ public class AnimalServiceImpl implements AnimalService {
     public void save(Animal animal) {
         animalRepository.save(animal);
     }
+
+    @Override
+    public void update(Animal animal) {
+        animalRepository.save(animal);
+    }
+
+    @Override
+    public Animal findById(Long id) {
+        return animalRepository.findAnimalById(id);
+    }
+
+
+//    @Override
+//    public void delete(Long animal_id) {
+//        Animal animal = animalRepository.findAnimalById(animal_id);
+//        animalRepository.delete(animal);
+//    }
+
 
     @Override
     public List<Animal> findAll(){
