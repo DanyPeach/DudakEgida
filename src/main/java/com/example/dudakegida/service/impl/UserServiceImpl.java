@@ -17,11 +17,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -43,7 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByLogin(String login) {
-        return findAll().stream().filter(user -> user.getLogin().equals(login))
-                .findFirst().orElse(new User());
+        return userRepository.findByLogin(login);
+        /*findAll().stream().filter(user -> user.getLogin().equals(login))
+                .findFirst().orElse(new User());*/
     }
+
+
 }
