@@ -47,7 +47,7 @@ public class WebSecurityConfiguration  {
                 authorizeHttpRequests(
                         request -> request.antMatchers(  "/new/** ", "/user/**").permitAll()
                                 .anyRequest().authenticated())
-                .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
+                .formLogin(login -> login.loginPage("/new/login").permitAll())
                 .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))
                 .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
