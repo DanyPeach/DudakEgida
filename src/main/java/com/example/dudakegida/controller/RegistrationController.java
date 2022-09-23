@@ -21,25 +21,29 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @GetMapping("/registration")
-    public ModelAndView registration(){
+    @GetMapping("/registrationPage")
+    public ModelAndView registrationPage(){
         ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("user", new User());
         modelAndView.setViewName("registration");
         return modelAndView;
     }
 
-    @PostMapping
+    @PostMapping("/registration")
     public ModelAndView registration(@ModelAttribute User user){
         ModelAndView modelAndView = new ModelAndView();
-//        user.setRole(new HashSet<>(L));
         userService.save(user);
-        modelAndView.setViewName("");
+        modelAndView.setViewName("tem");
         return modelAndView;
     }
 
-    @ModelAttribute()
-    public void addAttributes(Model model){
-        model.addAttribute("user", new User());
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
     }
+
+//
+//    @ModelAttribute()
+//    public void addAttributes(Model model){
+//        model.addAttribute("user", new User());
+//    }
 }

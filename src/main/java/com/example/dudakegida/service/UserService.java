@@ -10,8 +10,8 @@ public interface UserService {
 
     Optional<User> findById(Long id);
 
-    User getByName(String name);
-
     void save(User user);
+
+    User getByLogin(String login);
 
 }

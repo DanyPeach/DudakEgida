@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en-US" dir="ltr">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en-US" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,22 +36,22 @@
 
     -->
     <!-- Default stylesheets-->
-    <link th:href="@{/styles/lib/bootstrap/dist/css/bootstrap.min.css}" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link th:href="@{/styles/lib/animate.css/animate.css}" href="/static/lib/animate.css/animate.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/components-font-awesome/css/font-awesome.min.css}" href="/static/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/et-line-font/et-line-font.css}" href="/static/lib/et-line-font/et-line-font.css" rel="stylesheet">
-    <link th:href="@{/stlibyles//flexslider/flexslider.css}" href="/static/lib/flexslider/flexslider.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/owl.carousel/dist/assets/owl.carousel.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/magnific-popup/dist/magnific-popup.css}" href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/simple-text-rotator/simpletextrotator.css}" href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+    <link th:href="@{/lib/animate.css/animate.css}" href="/static/lib/animate.css/animate.css" rel="stylesheet">
+    <link th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}" href="/static/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/lib/et-line-font/et-line-font.css}" href="/static/lib/et-line-font/et-line-font.css" rel="stylesheet">
+    <link th:href="@{/lib/flexslider/flexslider.css}" href="/static/lib/flexslider/flexslider.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link th:href="@{/lib/magnific-popup/dist/magnific-popup.css}" href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link th:href="@{/lib/simple-text-rotator/simpletextrotator.css}" href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
     <!-- Main stylesheet and color file-->
-    <link th:href="@{/styles/css/style.css}" href="/static/css/style.css" rel="stylesheet">
-    <link id="color-scheme" th:href="@{/styles/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" href="/static/css/style.css" rel="stylesheet">
+    <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
 </head>
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
 <main>
@@ -68,25 +68,23 @@
                     <li><a href="#totop">Home</a></li>
                     <li><a class="section-scroll" href="#works">Works</a></li>
                     <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
-<!--                    <c:if test="${name ne null}">-->
-<!--                        <li><a class="section-scroll" href="userpage.jsp">Profile</a></li>-->
-<!--                        <li><a class="section-scroll" href="#"> ${name}</a></li>-->
-<!--                    </c:if>-->
-<!--                    <c:if test="${name eq null}">-->
-<!--                        <li class="dropdown"><a class="dropdown-toggle" href="login.html" data-toggle="dropdown">Sing In</a>-->
-<!--                            <ul class="dropdown-menu">-->
-<!--                                <li class="dropdown"><a class="dropdown-toggle" href="index.jsp" data-toggle="dropdown">Sing Up</a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                    </c:if>-->
+
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
+                                            th:href="@{/profile}">Profile</a></li>
+
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+                                                                              onclick="document.getElementById('FormId').submit()">Logout</a>
+                    </li>
+
                     <li><a class="section-scroll" href="#news">News</a></li>
                     <li><a class="section-scroll" href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <section class="home-section home-full-height bg-dark bg-gradient" id="home" data-background="/images/maindogscats.jpg" style=" max-height: 800px;">
+    <section class="home-section home-full-height bg-dark bg-gradient" id="home" data-background="/static/images/maindogscats.jpg" style=" max-height: 800px;">
         <div class="titan-caption">
             <div class="caption-content">
                 <div class="font-alt mb-30 titan-title-size-1">Hello &amp; welcome</div>

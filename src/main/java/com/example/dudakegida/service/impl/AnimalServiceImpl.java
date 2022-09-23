@@ -34,6 +34,11 @@ public class AnimalServiceImpl implements AnimalService {
         return animalRepository.findAnimalById(id);
     }
 
+    @Override
+    public List<Animal> findByType(int type) {
+       return animalRepository.groupByType(type);
+    }
+
 
 //    @Override
 //    public void delete(Long animal_id) {

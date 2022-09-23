@@ -10,6 +10,5 @@ public interface AnimalService {
     void save(Animal animal);
     void update(Animal animal);
     Animal findById(Long id);
-
-
+    List<Animal> findByType(int type);
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,21 +41,26 @@ public class AdminController {
     }
 
     @GetMapping(value = "/hide/{id}")
-    public ModelAndView deleteAnimal(@PathVariable(name = "id") Long id){
+    public ModelAndView deleteAnimal(@PathVariable Long id){
        ModelAndView modelAndView = new ModelAndView();
        Animal animal = animalService.findById(id);
        animal.setAnimal_status(AnimalStatus.TAKEN);
        animalService.update(animal);
-       modelAndView.setViewName("allpets");
+       modelAndView.setViewName("redirect:/admin/allpetsPage");
        return modelAndView;
     }
 
     @GetMapping(value = "/allpetsPage")
-    public ModelAndView allpetsPage(){
+    public ModelAndView allPetsPage(){
         ModelAndView modelAndView = new ModelAndView();
         List<Animal> listOfPets = animalService.findAll();
         modelAndView.addObject("listOfPets", listOfPets);
         modelAndView.setViewName("allpets");
         return modelAndView;
+    }
+
+    @ModelAttribute
+    public void addAttributes(Model model){
+        model.addAttribute("listOfPets", new ArrayList<Animal>());
     }
 }
