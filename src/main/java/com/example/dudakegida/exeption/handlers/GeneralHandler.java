@@ -12,7 +12,7 @@ public class GeneralHandler {
     public ModelAndView exceptionPage(Exception exception){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("Exception" + exception.getClass().getName());
-        modelAndView.setViewName("");
+        modelAndView.setViewName("403");
         return modelAndView;
     }
 }

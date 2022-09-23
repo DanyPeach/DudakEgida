@@ -44,11 +44,11 @@ public class WebSecurityConfiguration {
         http.
                 csrf().disable().
                 authorizeHttpRequests(
-                        request -> request.antMatchers(  "/new/** ").permitAll()
+                        request -> request.antMatchers(  "/new/** ", "/user/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
-                .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"));
-                //.exceptionHandling().accessDeniedHandler(accessDeniedException);
+                .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))
+                .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
     }

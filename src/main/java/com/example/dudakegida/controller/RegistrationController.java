@@ -37,8 +37,10 @@ public class RegistrationController {
     }
 
     @GetMapping("/login")
-    public String loginPage(){
-        return "login";
+    public ModelAndView loginPage(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("login");
+        return view;
     }
 
 //

@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return findAll().stream().filter(user -> user.getLogin().equals(login))
+                .findFirst().orElse(new User());
     }
 }
