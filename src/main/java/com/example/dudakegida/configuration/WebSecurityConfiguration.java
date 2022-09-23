@@ -42,12 +42,13 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
+                csrf().disable().
                 authorizeHttpRequests(
-                        request -> request.antMatchers(  "/new/** ", "/user/**").permitAll()
+                        request -> request.antMatchers(  "/new/** ").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
-                .logout(LogoutConfigurer::permitAll)
-                .exceptionHandling().accessDeniedHandler(accessDeniedException);
+                .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"));
+                //.exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
     }

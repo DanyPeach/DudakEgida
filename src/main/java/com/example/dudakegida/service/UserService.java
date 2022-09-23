@@ -12,6 +12,6 @@ public interface UserService {
 
     void save(User user);
 
-    User getByLogin(String login);
+    User findByLogin(String login);
 
 }

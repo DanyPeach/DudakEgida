@@ -36,22 +36,22 @@
 
     -->
     <!-- Default stylesheets-->
-    <link th:href="@{/styles/lib/bootstrap/dist/css/bootstrap.min.css}" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-    <link th:href="@{/styles/lib/animate.css/animate.css}" href="/static/lib/animate.css/animate.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/components-font-awesome/css/font-awesome.min.css}" href="/static/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/et-line-font/et-line-font.css}" href="/static/lib/et-line-font/et-line-font.css" rel="stylesheet">
-    <link th:href="@{/stlibyles//flexslider/flexslider.css}" href="/static/lib/flexslider/flexslider.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/owl.carousel/dist/assets/owl.carousel.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/magnific-popup/dist/magnific-popup.css}" href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
-    <link th:href="@{/styles/lib/simple-text-rotator/simpletextrotator.css}" href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+    <link th:href="@{/lib/animate.css/animate.css}" href="/static/lib/animate.css/animate.css" rel="stylesheet">
+    <link th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}" href="/static/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/lib/et-line-font/et-line-font.css}" href="/static/lib/et-line-font/et-line-font.css" rel="stylesheet">
+    <link th:href="@{/lib/flexslider/flexslider.css}" href="/static/lib/flexslider/flexslider.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link th:href="@{/lib/magnific-popup/dist/magnific-popup.css}" href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link th:href="@{/lib/simple-text-rotator/simpletextrotator.css}" href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
     <!-- Main stylesheet and color file-->
-    <link th:href="@{/styles/css/style.css}" href="/static/css/style.css" rel="stylesheet">
-    <link id="color-scheme" th:href="@{/styles/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" href="/static/css/style.css" rel="stylesheet">
+    <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
 </head>
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
 <main>
@@ -117,10 +117,10 @@
                         <h4 class="font-alt">Login</h4>
                         <hr class="divider-w mb-10">
 
-                        <form class="form"  th:action="@{/login}" method="POST" style="padding: 0 200px;">
+                        <form class="form"  th:action="@{/new/login}" method="POST" style="padding: 0 200px;">
                             <input type="hidden" name="command" value="login">
                             <div class="form-group">
-                                <input class="form-control" id="username" type="text" name="login" placeholder="Username" style="width: 200px"/>
+                                <input class="form-control" id="login" type="text" name="login" placeholder="Username" style="width: 200px"/>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="width: 200px"/>
@@ -215,18 +215,19 @@
 JavaScripts
 =============================================
 -->
-<script src="assets/lib/jquery/dist/jquery.js"></script>
-<script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="assets/lib/wow/dist/wow.js"></script>
-<script src="assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
-<script src="assets/lib/isotope/dist/isotope.pkgd.js"></script>
-<script src="assets/lib/imagesloaded/imagesloaded.pkgd.js"></script>
-<script src="assets/lib/flexslider/jquery.flexslider.js"></script>
-<script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
-<script src="assets/lib/smoothscroll.js"></script>
-<script src="assets/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
-<script src="assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/main.js"></script>
+<script type="text/javascript" th:src="@{/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" th:src="@{/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/lib/wow/dist/wow.js}" src="/static/lib/wow/dist/wow.js"></script>
+<script type="text/javascript" th:src="@{/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}" src="/static/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+<script type="text/javascript" th:src="@{/lib/isotope/dist/isotope.pkgd.js}" src="/static/lib/isotope/dist/isotope.pkgd.js"></script>
+<script type="text/javascript" th:src="@{/lib/imagesloaded/imagesloaded.pkgd.js}" src="/static/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" th:src="@{/lib/flexslider/jquery.flexslider.js}" src="/static/lib/flexslider/jquery.flexslider.js"></script>
+<script type="text/javascript" th:src="@{/lib/owl.carousel/dist/owl.carousel.min.js}" src="/static/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+<script type="text/javascript" th:src="@{/lib/smoothscroll.js}" src="/static/lib/smoothscroll.js"></script>
+<script type="text/javascript" th:src="@{/lib/magnific-popup/dist/jquery.magnific-popup.js}" src="/static/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+<script type="text/javascript" th:src="@{/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}" src="/static/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
+<script type="text/javascript" th:src="@{/styles/js/plugins.js}" src="/static/js/plugins.js"></script>
+<script type="text/javascript" th:src="@{/styles/js/main.js}" src="/static/js/main.js"></script>
 </body>
 </html>
