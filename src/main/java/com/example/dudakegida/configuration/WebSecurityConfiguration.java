@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfiguration {
+public class WebSecurityConfiguration  {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final UserDetailsService userDetailsService;
@@ -58,10 +59,10 @@ public class WebSecurityConfiguration {
         return web -> web.ignoring().antMatchers("/resources/static/**" );
     }
 
-//    @Bean
-//    AuthenticationManager authenticationManager() throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
+    @Bean
+    AuthenticationManager authenticationManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
