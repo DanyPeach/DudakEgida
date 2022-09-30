@@ -1112,10 +1112,15 @@ Hero Slider
 }
 
 .caption-content {
-  height: 600px;
+  height: 900px;
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+  background-image: url('../images/maindogscats.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: saturation;
 }
 
 /*

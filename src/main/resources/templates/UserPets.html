@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Egida | Dudak TMS</title>
+    <title>Egida | Your Pets</title>
     <!--
     Favicons
     =============================================
@@ -54,71 +54,19 @@
     <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
 </head>
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-<main>
-    <!--    <div class="page-loader">-->
-    <!--        <div class="loader">Loading...</div>-->
-    <!--    </div>-->
-    <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">EGIDA DUDAK</a>
-            </div>
-            <div class="collapse navbar-collapse" id="custom-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a  th:href="@{/user/home}">Home</a></li>
-                    <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
-
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
-                                            th:href="@{/profile}">MyE</a></li>
-
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
-                                                                              th:href="@{/logout}">Logout</a>
-                    </li>
-
-                    <li><a class="section-scroll" href="#news">News</a></li>
-                    <li><a class="section-scroll" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
 
-        <div class="features-item">
-            <div class="features-icon"><span class="icon-lightbulb"></span></div>
-            <h3 class="features-title font-alt">All pets</h3>
-            <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addPage}">Add new Pet</a></a>
-            <div>
-                <a th:href="@{/user/allpets}">All</a>
-                <a th:href="@{/user/showing/{type}(type=0)}">Dogs</a>
-                <a th:href="@{/user/showing/{type}(type=1)}">Cats</a>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,250px); margin: 30px 30px">
-           <div th:each="pet : ${listOfPets}" class="all-pets-list" style="padding-bottom: 150px;" >
-            <div th:unless="${pet.animal_status == 'TAKEN'}">
-                <h2 th:text="${pet.animalName}">Name: </h2>
-                <p th:text="${pet.age}">Age: </p>
-
-                <span th:text="${pet.animal_type}">type</span>
-
-                <span th:text="${pet.sex}">sex</span>
-                <br>
-                <div th:unless="${pet.animal_status == 'UNAFFORDABLE'}">
-                <a sec:authorize="isAuthenticated()" th:href="@{/user/takePet/{pet_id}(pet_id=${pet.animalId})}">Take</a>
-                </div>
-                <br>
-                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/hide/{id}(id=${pet.animalId})}">hide</a>
-                <a sec:authorize="hasAuthority('ADMIN')"  th:href="@{admin/deleteAnimal/{id}(id=${pet.animalId})}">mark as taken</a>
-                <br>
-            </div>
-           </div>
-            </div>
-            <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
 
 
-</div>
-</main>
+
+
+
+
+
+
+
+
+
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/wow/dist/wow.js}" src="/static/lib/wow/dist/wow.js"></script>

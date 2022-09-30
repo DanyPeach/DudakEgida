@@ -11,4 +11,7 @@ public interface AnimalService {
     void update(Animal animal);
     Animal findById(Long id);
     List<Animal> findByType(int type);
+    List<Animal> findRandomThree();
+    List<Animal> findPetsByUserId(long id);
+
 }

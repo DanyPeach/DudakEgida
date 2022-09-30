@@ -1,10 +1,12 @@
 package com.example.dudakegida.controller;
 
 import com.example.dudakegida.model.Animal;
+import com.example.dudakegida.model.AnimalStatus;
 import com.example.dudakegida.model.Role;
 import com.example.dudakegida.model.User;
 import com.example.dudakegida.service.AnimalService;
 import com.example.dudakegida.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.Set;
 public class UserController {
     private final UserService userService;
     private final AnimalService animalService;
+
 
     public UserController(UserService userService, AnimalService animalService) {
         this.userService = userService;
@@ -44,7 +47,8 @@ public class UserController {
 
     @GetMapping("/home")
     public ModelAndView userList(ModelAndView modelAndView){
-        modelAndView.addObject("users", userService.findAll());
+        List<Animal> randomThree = animalService.findRandomThree();
+        modelAndView.addObject("randomThree", randomThree);
         modelAndView.setViewName("tem");
         return modelAndView;
     }
@@ -57,6 +61,14 @@ public class UserController {
         return modelAndView;
     }
 
+//    @GetMapping("/randomThreePets")
+//    public ModelAndView randomThreePets(ModelAndView modelAndView){
+//        List<Animal> randomThree = animalService.findRandomThree();
+//        modelAndView.addObject("randomThree", randomThree);
+//        modelAndView.setViewName("allpets");
+//        return modelAndView;
+//    }
+
 
     @GetMapping("/showing/{type}")
     public ModelAndView showByType(ModelAndView modelAndView, @PathVariable int type){
@@ -65,6 +77,53 @@ public class UserController {
         modelAndView.setViewName("allpets");
         return modelAndView;
     }
+
+    @GetMapping("/takePet/{pet_id}")
+    public ModelAndView takePet(@PathVariable String pet_id, Authentication authentication){
+        ModelAndView modelAndView = new ModelAndView();
+
+        userService.setChosen_pet_id(Long.decode(pet_id));
+        modelAndView.setViewName("confirmePet");
+        return modelAndView;
+    }
+
+    @PostMapping("/confirmePetPassword")
+    public ModelAndView confirme(@ModelAttribute User user, Authentication authentication){
+        ModelAndView modelAndView = new ModelAndView();
+        if(userService.confirmeChosenPet(user, authentication)){
+            userService.takeChosenPet(userService.getChosenPetId(), authentication);
+            modelAndView.setViewName("tem");
+        }else{
+            modelAndView.setViewName("tem");
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/myPets")
+    public ModelAndView myPets(Authentication authentication){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userPets",
+                animalService.findPetsByUserId(getUser(authentication).getId()));
+        modelAndView.setViewName("UserPets");
+        return modelAndView;
+    }
+
+    private User getUser(Authentication authentication){
+        String username = authentication.getName();
+        return userService.findByLogin(username);
+    }
+
+//    @GetMapping("/pickPet/{id}")
+//    public ModelAndView pickPetForUser(ModelAndView modelAndView, @PathVariable long id, @ModelAttribute User user){
+//        Animal animal = animalService.findById(id);
+//        modelAndView.addObject("chosenPet", animal);
+//        List<Animal> userpets = user.getPets();
+//        userpets.add(animal);
+//        user.setPets(userpets);
+//        modelAndView.setViewName("");
+//        return modelAndView;
+//    }
+
 
 //    @ModelAttribute
 //    public void addAttributes(Model model){

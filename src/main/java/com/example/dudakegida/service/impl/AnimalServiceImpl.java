@@ -6,8 +6,7 @@ import com.example.dudakegida.service.AnimalService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -38,6 +37,36 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findByType(int type) {
        return animalRepository.groupByType(type);
     }
+
+    @Override
+    public List<Animal> findRandomThree() {
+        List<Animal> animals = findAll();
+        if(!animals.isEmpty()) {
+            Collections.shuffle(animals);
+            List<Animal> result = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                result.add(animals.get(i));
+            }
+            System.out.println(result);
+            return result;
+        }else {
+            return new ArrayList<>();
+        }
+
+    }
+
+    @Override
+    public List<Animal> findPetsByUserId(long id) {
+        return animalRepository.findPetsByUserId(id);
+    }
+
+
+
+//    @Override
+//    public List<Animal> findAnimalByUserId(long id) {
+//        long  = animalRepository.findPetsByUserId(id);
+//        return null;
+//    }
 
 
 //    @Override

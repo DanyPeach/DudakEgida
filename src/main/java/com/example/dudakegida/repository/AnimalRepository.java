@@ -15,4 +15,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query(value = "SELECT * FROM pets WHERE animal_type=:animal_type", nativeQuery = true)
     List<Animal> groupByType(@Param("animal_type") int animal_type);
 
+    @Query(value = "SELECT * FROM pets WHERE user_id=:user_id", nativeQuery = true)
+    List<Animal> findPetsByUserId(@Param("user_id") long user_id);
 }

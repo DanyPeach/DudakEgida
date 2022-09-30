@@ -85,39 +85,36 @@
     </nav>
 
 
-        <div class="features-item">
-            <div class="features-icon"><span class="icon-lightbulb"></span></div>
-            <h3 class="features-title font-alt">All pets</h3>
-            <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addPage}">Add new Pet</a></a>
-            <div>
-                <a th:href="@{/user/allpets}">All</a>
-                <a th:href="@{/user/showing/{type}(type=0)}">Dogs</a>
-                <a th:href="@{/user/showing/{type}(type=1)}">Cats</a>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,250px); margin: 30px 30px">
-           <div th:each="pet : ${listOfPets}" class="all-pets-list" style="padding-bottom: 150px;" >
-            <div th:unless="${pet.animal_status == 'TAKEN'}">
-                <h2 th:text="${pet.animalName}">Name: </h2>
-                <p th:text="${pet.age}">Age: </p>
+    <div class="features-item">
+       <h2>Are you sure?</h2>
+        <br>
+        <p>If you are ready to take this pet, please enter your password down below</p>
 
-                <span th:text="${pet.animal_type}">type</span>
+    </div>
+    <section class="module">
+        <div class="container">
+            <div class="row" style="display: flex; flex-direction: row; align-items: center; text-align: center">
+                <div class="forma" style="margin: 0 auto">
+                    <hr class="divider-w mb-10">
+                    <form class="form"  th:action="@{/user/confirmePetPassword}" th:method="POST" th:object="${user}" style="padding: 0 200px;">
+                        <!--                            <input type="hidden" name="command" value="login">-->
+                        <div class="form-group">
+                            <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="width: 200px"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-round btn-b" type="submit" value="Submit" />
+                        </div>
+                        <div class="form-group"><a th:href="@{/user/allpets}">I'm not ready</a></div>
+                    </form>
 
-                <span th:text="${pet.sex}">sex</span>
-                <br>
-                <div th:unless="${pet.animal_status == 'UNAFFORDABLE'}">
-                <a sec:authorize="isAuthenticated()" th:href="@{/user/takePet/{pet_id}(pet_id=${pet.animalId})}">Take</a>
                 </div>
-                <br>
-                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/hide/{id}(id=${pet.animalId})}">hide</a>
-                <a sec:authorize="hasAuthority('ADMIN')"  th:href="@{admin/deleteAnimal/{id}(id=${pet.animalId})}">mark as taken</a>
-                <br>
             </div>
-           </div>
-            </div>
-            <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
+        </div>
+    </section>
+        <p>Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
 
 
-</div>
+
 </main>
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>

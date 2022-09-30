@@ -4,9 +4,10 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Data
 @Table(name = "pets")
@@ -43,4 +44,19 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     @NotNull
     private AnimalStatus animal_status;
+
+    @ManyToOne
+    private User user;
+
+    public Animal(Long animalId, String animalName, AnimalType animal_type, double weight, int age, String sex, boolean deasise, String imgURL, AnimalStatus animal_status) {
+        this.animalId = animalId;
+        this.animalName = animalName;
+        this.animal_type = animal_type;
+        this.weight = weight;
+        this.age = age;
+        this.sex = sex;
+        this.deasise = deasise;
+        this.imgURL = imgURL;
+        this.animal_status = animal_status;
+    }
 }

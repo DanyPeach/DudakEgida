@@ -43,12 +43,19 @@ public class WebSecurityConfiguration  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
+                requestCache().disable().
                 csrf().disable().
                 authorizeHttpRequests(
                         request -> request.antMatchers(  "/new/** ", "/user/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
-                .logout(logout -> logout.permitAll().deleteCookies("JSESSIONID"))
+                .logout()
+                    .logoutUrl("/logout")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessUrl("/user/home")
+                .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
@@ -56,7 +63,7 @@ public class WebSecurityConfiguration  {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers("/resources/static/**" );
+        return web -> web.ignoring().antMatchers("/css/**", "/images/**", "/js/**", "/lib/**", "/scss/**" );
     }
 
     @Bean

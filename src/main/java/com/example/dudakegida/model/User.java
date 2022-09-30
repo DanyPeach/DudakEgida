@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -59,6 +60,15 @@ public class User {
     private Set<Role> role;
 
     private String picture;
+
+//    @ElementCollection(targetClass = Animal.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "user_pets", joinColumns = @JoinColumn(name = "pets_id"))
+//    @NotNull
+//    @Column(name = "pets")
+//    private Set<Animal> pets;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Animal> animal;
 
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive,  String address,
                 String gender, String phoneNumber, String email, LocalDate dayBirth, Set<Role> role) {
