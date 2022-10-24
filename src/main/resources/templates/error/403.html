@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en-US" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <title>EGIDA | ERROR</title>
 </head>
 <body>
 <h1>you fucked up</h1>
+<p th:text="${Exception}"></p>
 </body>
 </html>

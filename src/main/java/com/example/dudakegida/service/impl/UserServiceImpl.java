@@ -13,8 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+
     }
 
     @Override
@@ -61,16 +64,7 @@ public class UserServiceImpl implements UserService {
     public boolean confirmeChosenPet(User user, Authentication authentication) {
         User user1 = getUser(authentication);
         user.setPassword(user1.getPassword());
-        System.out.println("auth user - " + user1.getPassword());
-        System.out.println("user from form - " + user.getPassword());
-        if(user.getPassword().equals(user1.getPassword())){
-            Animal animal = animalService.findById(chosen_pet_id);
-            animal.setAnimal_status(AnimalStatus.UNAFFORDABLE);
-            animalService.update(animal);
-            return true;
-        }else{
-            return false;
-        }
+        return user.getPassword().equals(user1.getPassword());
     }
 
     private User getUser(Authentication authentication){
@@ -95,7 +89,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public void takeChosenPet(long petId, Authentication authentication) {
         Animal animal = animalService.findById(petId);
-        animal.setUser(getUser(authentication));
+        Set<User> users = animal.getUserChose();
+        users.add(getUser(authentication));
+        animal.setUserChose(users);
+        animal.setAnimal_status(AnimalStatus.CHECKING);
         animalService.update(animal);
+    }
+
+    @Override
+    public List<User> findUsersById(){
+        List<User> list = new ArrayList<>();
+        for(var i : getUsersIdThatWantPet()){
+            for(User user : findAll()){
+                if(user.getId()==i){
+                    list.add(user);
+                }
+            }
+        }
+        return list;
+    }
+
+    public Set<Long> getUsersIdThatWantPet(){
+        return userRepository.findUsersIdByChosenPets();
     }
 }

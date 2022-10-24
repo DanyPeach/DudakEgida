@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Egida | Pet Add</title>
+    <title>Egida | Food Add</title>
     <!--
     Favicons
     =============================================
@@ -123,31 +123,27 @@ n>
                 <div class="forma" style="margin: 0 auto">
                     <h4 class="font-alt">Pet Info Form</h4>
                     <hr class="divider-w mb-10">
-                    <form class="form" enctype="multipart/form-data" th:action="@{/admin/add}" th:method="POST" th:object="${animal}" style="padding: 0 200px;">
+                    <form class="form" enctype="multipart/form-data" th:action="@{/admin/addFood}" th:method="POST" th:object="${food}" style="padding: 0 200px;">
                         <input type="hidden" name="command" value="registration">
                         <div class="form-group">
-                            <input class="form-control" name="animalName" placeholder="animal name" required  style="width: 200px"/>
+                            <input class="form-control" name="name" placeholder="animal name" required  style="width: 200px"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="age" placeholder="Animal age" required  style="width: 200px"/>
+                            <input class="form-control" name="mark" placeholder="mark" required  style="width: 200px"/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="deasise" placeholder="Deasise" required  style="width: 200px"/>
+                            <input class="form-control" name="price" placeholder="price" required  style="width: 200px"/>
                         </div>
                         <div class="form-group">
-                            <p><select name="animal_type">
-                                <option value="DOG">Dog</option>
-                                <option value="CAT">Cat</option>
-                                <option value="BIRD">Bird</option>
-                                <option value="RODENT">Rodent</option>
-                                <option value="SCALY">Scaly</option>
-                                <option value="OTHER">Other</option>
+                            <p><select name="foodType">
+                                <option value="FOR_BIG_DOGS">Big dogs</option>
+                                <option value="FOR_MEDIUM_DOGS">Med dogs</option>
+                                <option value="FOR_SMALL_DOGS">Small dogs</option>
+                                <option value="FOR_CATS">Cats</option>
+                                <option value="FOR_BIRDS">Birds</option>
+                                <option value="SWEETS_FOR_PETS">Sweets</option>
+                                <option value="STUFF">Other</option>
                             </select>
-                        </div>
-
-                        <div class="form-group">
-                            <input class="" type="radio" name="sex" value="female" checked />Female
-                            <input class="" type="radio" name="sex" value="male" />Male
                         </div>
 
                         <div class="form-group">

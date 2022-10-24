@@ -19,7 +19,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotNull
@@ -70,6 +70,9 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Animal> animal;
 
+    @ManyToMany(mappedBy = "userChose")
+    private Set<Animal> animalUserWant;
+
     public User(long id, String firstName, String lastName, String login, String password, boolean isActive,  String address,
                 String gender, String phoneNumber, String email, LocalDate dayBirth, Set<Role> role) {
         this.id = id;
@@ -87,4 +90,41 @@ public class User {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (getId() != user.getId()) return false;
+        if (isActive() != user.isActive()) return false;
+        if (!getFirstName().equals(user.getFirstName())) return false;
+        if (!getLastName().equals(user.getLastName())) return false;
+        if (!getLogin().equals(user.getLogin())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (!getAddress().equals(user.getAddress())) return false;
+        if (!getGender().equals(user.getGender())) return false;
+        if (!getPhoneNumber().equals(user.getPhoneNumber())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getDayBirth().equals(user.getDayBirth())) return false;
+        return  (getRole().equals(user.getRole()));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getLogin().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (isActive() ? 1 : 0);
+        result = 31 * result + getAddress().hashCode();
+        result = 31 * result + getGender().hashCode();
+        result = 31 * result + getPhoneNumber().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getDayBirth().hashCode();
+        result = 31 * result + getRole().hashCode();
+        return result;
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.dudakegida.configuration;
 
-import com.example.dudakegida.exeption.handlers.AccessDeniedException;
+//import com.example.dudakegida.exeption.handlers.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,17 +22,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfiguration  {
+public class WebSecurityConfiguration {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final UserDetailsService userDetailsService;
-    private final com.example.dudakegida.exeption.handlers.AccessDeniedException accessDeniedException;
+//    private final com.example.dudakegida.exeption.handlers.AccessDeniedException accessDeniedException;
 
 
-    public WebSecurityConfiguration(AuthenticationConfiguration authenticationConfiguration, UserDetailsService userDetailsService, AccessDeniedException accessDeniedException) {
+    public WebSecurityConfiguration(AuthenticationConfiguration authenticationConfiguration, UserDetailsService userDetailsService) {
         this.authenticationConfiguration = authenticationConfiguration;
-        this.userDetailsService = userDetailsService;
-        this.accessDeniedException = accessDeniedException;
+         this.userDetailsService = userDetailsService;
+//        this.accessDeniedException = accessDeniedException;
     }
 
     @Bean
@@ -46,24 +46,24 @@ public class WebSecurityConfiguration  {
                 requestCache().disable().
                 csrf().disable().
                 authorizeHttpRequests(
-                        request -> request.antMatchers(  "/new/** ", "/user/**").permitAll()
+                        request -> request.antMatchers("/new/** ", "/user/**", "/product/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
                 .logout()
-                    .logoutUrl("/logout")
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/user/home")
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedException);
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/user/home");
+//                .and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedException);
 
         return http.build();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers("/css/**", "/images/**", "/js/**", "/lib/**", "/scss/**" );
+        return web -> web.ignoring().antMatchers("/css/**", "/images/**", "/js/**", "/lib/**", "/scss/**", "/uploadedImg/**", "/filterfoodcss/**");
     }
 
     @Bean
@@ -72,7 +72,7 @@ public class WebSecurityConfiguration  {
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService);

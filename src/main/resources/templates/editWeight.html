@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Egida | Dudak TMS</title>
+    <title>Egida | Your Pets</title>
     <!--
     Favicons
     =============================================
@@ -54,10 +54,12 @@
     <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
 </head>
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+
+
+
+
 <main>
-    <!--    <div class="page-loader">-->
-    <!--        <div class="loader">Loading...</div>-->
-    <!--    </div>-->
+
     <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
         <div class="container">
             <div class="navbar-header">
@@ -65,57 +67,80 @@
             </div>
             <div class="collapse navbar-collapse" id="custom-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a  th:href="@{/user/home}">Home</a></li>
+                    <li><a href="#totop">Home</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/showProduct/{type}(type=9)}" data-toggle="dropdown">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a></li>
+
+                        </ul>
+                    </li>
                     <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
 
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
-                                            th:href="@{/profile}">MyE</a></li>
+                                            th:href="@{/profile}">Profile</a></li>
 
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
+                    <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/userConfirm}">Confirm pets</a></li>
                     <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
                                                                               th:href="@{/logout}">Logout</a>
                     </li>
 
-                    <li><a class="section-scroll" href="#news">News</a></li>
-                    <li><a class="section-scroll" href="#contact">Contact</a></li>
+                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/egida/myPets}">MyPets</a></li>
+                            <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="section-scroll" href="#contact">News</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <h1>Your Pets Are here!</h1>
+    <p style="text-align: center; font-size: 60px;" th:if="${userCarts.isEmpty()}">ITS EMPTY ORURRRRRRRRRRRR</p>
 
-    <div class="features-item">
-       <h2>Are you sure?</h2>
-        <br>
-        <p>If you are ready to take this pet, please enter your password down below</p>
+    <div th:if="${not #lists.isEmpty(userCarts)}">
+        <div class="features-item">
+            <div style="display: grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(3,250px); margin: 30px 30px; text-align: center; padding-top: 80px;">
+                <div class="all-pets-list" style="padding-bottom: 150px; align-items: center;
+    padding-bottom: 150px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;" >
+
+                    <img width="500" height="500" th:src="${cartObj.getImgURL()}" alt="photo conformation"
+                         style="object-fit: cover; width: 256px; height: 240px;"/>
+                    <h2 th:text="${cartObj.name}" style="margin: 0px;">Name:  </h2>
+                    <p>Price for 1kg:</p>
+                    <p th:text="${food.price}" style="margin-bottom: 0px;">Price: </p>
+
+
+                    <a class="btn btn-d btn-round" th:href="@{/cart/chacngeQuantity}">Delete Item</a>
+                    <a class="btn btn-d btn-round" href="#">Edit</a>
+                </div>
+
+            </div>
+            <hr>
+        </div>
+
+
+        <div style="text-align: center">
+            <h2>Total price is:</h2>
+            <div th:text="${totalPrice}" style="font-size: 25px;"></div>
+        </div>
+        <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
 
     </div>
-    <section class="module">
-        <div class="container">
-            <div class="row" style="display: flex; flex-direction: row; align-items: center; text-align: center">
-                <div class="forma" style="margin: 0 auto">
-                    <hr class="divider-w mb-10">
-                    <form class="form"  th:action="@{/egida/confirmePetPassword}" th:method="POST" th:object="${user}" style="padding: 0 200px;">
-                        <!--                            <input type="hidden" name="command" value="login">-->
-                        <div class="form-group">
-                            <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="width: 200px"/>
-                        </div>
-                        <div class="form-group">
-                            <input class="btn btn-round btn-b" type="submit" value="Submit" />
-                        </div>
-                        <div class="form-group"><a th:href="@{/user/allpets}">I'm not ready</a></div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </section>
-        <p>Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
-
-
-
 </main>
+
+
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/wow/dist/wow.js}" src="/static/lib/wow/dist/wow.js"></script>

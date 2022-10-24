@@ -59,9 +59,36 @@
 
 
 
+<h1>Your Pets Are here!</h1>
+
+<div th:if="${not #lists.isEmpty(userPets)}">
+    <div class="features-item">
+        <div class="features-icon"><span class="icon-lightbulb"></span></div>
+        <h3 class="features-title font-alt">All pets</h3>
+        <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addPage}">Add new Pet</a></a>
+        <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,250px); margin: 30px 30px">
+            <div th:each="pet : ${userPets}" class="all-pets-list" style="padding-bottom: 150px;" >
+
+                <h2 th:text="${pet.animalName}">Name: </h2>
+                <p th:text="${pet.age}">Age: </p>
+
+                <span th:text="${pet.animal_type}">type</span>
+
+                <span th:text="${pet.sex}">sex</span>
+                <br>
+
+                <br>
+                <br>
+            </div>
+        </div>
+</div>
+
+    <div th:if="${#lists.isEmpty(userPets)}">
+<h1>You dont have any</h1>
+    </div>
 
 
-
+    <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
 
 
 

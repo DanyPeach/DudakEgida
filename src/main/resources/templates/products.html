@@ -101,39 +101,40 @@
 
     <div class="features-item">
         <div class="features-icon"><span class="icon-lightbulb"></span></div>
-        <h3 class="features-title font-alt">All pets</h3>
-        <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addPage}">Add new Pet</a></a>
+        <h3 class="features-title font-alt">Shop</h3>
+        <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addFoodPage}">Add new Product</a></a>
         <div>
-            <a th:href="@{/user/allpets}">All</a>
-            <a th:href="@{/user/showing/{type}(type=0)}">Dogs</a>
-            <a th:href="@{/user/showing/{type}(type=1)}">Cats</a>
+            <a th:href="@{/product/showProduct/{type}(type=9)}" style="padding-left: 20px">All</a>
+            <a th:href="@{/product/showProduct/{type}(type=0)}" style="padding-left: 20px">Dog food</a>
+            <a th:href="@{/product/showProduct/{type}(type=1)}" style="padding-left: 20px">Cat food</a>
+            <a th:href="@{/product/showProduct/{type}(type=2)}" style="padding-left: 20px">Bird food</a>
+            <a th:href="@{/product/showProduct/{type}(type=3)}" style="padding-left: 20px">Other food</a>
+            <a th:href="@{/product/showProduct/{type}(type=4)}" style="padding-left: 20px">Sweets</a>
+            <a th:href="@{/product/showProduct/{type}(type=5)}" style="padding-left: 20px">Stuff</a>
         </div>
+
         <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,500px); margin: 30px 30px">
-            <div th:each="pet : ${listOfPets}" class="all-pets-list" style="padding-bottom: 150px;">
-                <th:block th:if="${pet.animal_status.name != 'TAKEN'}">
+            <div th:each="food : ${foodList}" class="all-pets-list" style="padding-bottom: 150px;">
                     <div>
-                        <img width="256" height="256" th:src="${pet.getImgURL()}" alt="photo conformation"
+                        <img width="256" height="256" th:src="${food.getImgURL()}" alt="photo conformation"
                              style="object-fit: cover; width: 256px; height: 240px;"/>
-                        <h2 th:text="${pet.animalName}">Name: </h2>
-                        <p th:text="${pet.age}">Age: </p>
+                        <h2 th:text="${food.name}">Name: </h2>
+                        <p th:text="${food.price}">Age: </p>
 
-                        <span th:text="${pet.animal_type}">type</span>
+                        <span th:text="${food.foodType}">type</span>
 
-                        <span th:text="${pet.sex}">sex</span>
+                        <span th:text="${food.mark}">sex</span>
                         <br>
-                        <a th:href="@{/user/moreInfoAboutPet/{pet_id}(pet_id=${pet.animalId})}">More info</a>
-                        <div th:unless="${pet.animal_status.name == 'UNAFFORDABLE'}">
-                            <a sec:authorize="isAuthenticated()"
-                               th:href="@{/egida/takePet/{pet_id}(pet_id=${pet.animalId})}">Take</a>
-                        </div>
+                        <a th:href="@{/user/moreInfoAboutPet/{food_id}(food_id=${food.id})}">More info</a>
+                        <a sec:authorize="isAuthenticated()"
+                               th:href="@{/cart/takeProduct/{product_id}/(product_id=${food.id})}">Add to cart</a>
                         <br>
                         <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{/admin/hide/{id}(id=${pet.animalId})}">hide</a>
+                           th:href="@{/admin/hide/{food_id}(food_id=${food.id})}">hide</a>
                         <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{admin/deleteAnimal/{id}(id=${pet.animalId})}">mark as taken</a>
+                           th:href="@{admin/deleteAnimal/{food_id}(food_id=${food.id})}">mark as taken</a>
                         <br>
                     </div>
-                </th:block>
             </div>
         </div>
         <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user

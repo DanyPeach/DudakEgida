@@ -57,6 +57,14 @@
           href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link th:href="@{/lib/simple-text-rotator/simpletextrotator.css}"
           href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" th:href="@{/filterfoodcss/reset.css}"
+          href="/static/filterfoodcss/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" th:href="@{/filterfoodcss/style.css}"
+          href="css/style.css">
+    <script th:src="@{/filterfoodcss/js/modernizr.js}"></script> <!-- Modernizr -->
+
     <!-- Main stylesheet and color file-->
     <link th:href="@{/css/style.css?version=51}" href="/static/css/style.css" rel="stylesheet">
     <link id="color-scheme" th:href="@{/css/colors/default.css}" href="/static/css/colors/default.css" rel="stylesheet">
@@ -101,45 +109,124 @@
 
     <div class="features-item">
         <div class="features-icon"><span class="icon-lightbulb"></span></div>
-        <h3 class="features-title font-alt">All pets</h3>
-        <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addPage}">Add new Pet</a></a>
+        <h3 class="features-title font-alt">Shop</h3>
+        <a><a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/addFoodPage}">Add new Product</a></a>
         <div>
-            <a th:href="@{/user/allpets}">All</a>
-            <a th:href="@{/user/showing/{type}(type=0)}">Dogs</a>
-            <a th:href="@{/user/showing/{type}(type=1)}">Cats</a>
+            <a th:href="@{/product/showProduct/{type}(type=9)}">All</a>
+            <a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a>
+            <a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a>
+            <a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a>
+            <a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a>
+            <a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a>
+            <a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a>
         </div>
         <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,500px); margin: 30px 30px">
-            <div th:each="pet : ${listOfPets}" class="all-pets-list" style="padding-bottom: 150px;">
-                <th:block th:if="${pet.animal_status.name != 'TAKEN'}">
-                    <div>
-                        <img width="256" height="256" th:src="${pet.getImgURL()}" alt="photo conformation"
-                             style="object-fit: cover; width: 256px; height: 240px;"/>
-                        <h2 th:text="${pet.animalName}">Name: </h2>
-                        <p th:text="${pet.age}">Age: </p>
+            <div th:each="food : ${foodList}" class="all-pets-list" style="padding-bottom: 150px;">
+                <div>
+                    <img width="256" height="256" th:src="${food.getImgURL()}" alt="photo conformation"
+                         style="object-fit: cover; width: 256px; height: 240px;"/>
+                    <h2 th:text="${food.name}">Name: </h2>
+                    <p th:text="${food.price}">Age: </p>
 
-                        <span th:text="${pet.animal_type}">type</span>
+                    <span th:text="${food.foodType}">type</span>
 
-                        <span th:text="${pet.sex}">sex</span>
-                        <br>
-                        <a th:href="@{/user/moreInfoAboutPet/{pet_id}(pet_id=${pet.animalId})}">More info</a>
-                        <div th:unless="${pet.animal_status.name == 'UNAFFORDABLE'}">
-                            <a sec:authorize="isAuthenticated()"
-                               th:href="@{/egida/takePet/{pet_id}(pet_id=${pet.animalId})}">Take</a>
-                        </div>
-                        <br>
-                        <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{/admin/hide/{id}(id=${pet.animalId})}">hide</a>
-                        <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{admin/deleteAnimal/{id}(id=${pet.animalId})}">mark as taken</a>
-                        <br>
-                    </div>
-                </th:block>
+                    <span th:text="${food.mark}">sex</span>
+                    <br>
+                    <a th:href="@{/user/moreInfoAboutPet/{food_id}(food_id=${food.id})}">More info</a>
+                    <a sec:authorize="isAuthenticated()"
+                       th:href="@{/egida/takeFood/{food_id}(food_id=${food.id})}">Add to cart</a>
+                    <br>
+                    <a sec:authorize="hasAuthority('ADMIN')"
+                       th:href="@{/admin/hide/{food_id}(food_id=${food.id})}">hide</a>
+                    <a sec:authorize="hasAuthority('ADMIN')"
+                       th:href="@{admin/deleteAnimal/{food_id}(food_id=${food.id})}">mark as taken</a>
+                    <br>
+                </div>
             </div>
         </div>
+
+        <div class="cd-filter">
+            <form>
+                <div class="cd-filter-block">
+                    <h4>Search</h4>
+
+                    <div class="cd-filter-content">
+                        <input type="search" placeholder="Try color-1...">
+                    </div> <!-- cd-filter-content -->
+                </div> <!-- cd-filter-block -->
+
+                <div class="cd-filter-block">
+                    <h4>Check boxes</h4>
+
+                    <ul class="cd-filter-content cd-filters list">
+                        <li>
+                            <input class="filter" data-filter=".check1" type="checkbox" id="checkbox1">
+                            <label class="checkbox-label" for="checkbox1">Option 1</label>
+                        </li>
+
+                        <li>
+                            <input class="filter" data-filter=".check2" type="checkbox" id="checkbox2">
+                            <label class="checkbox-label" for="checkbox2">Option 2</label>
+                        </li>
+
+                        <li>
+                            <input class="filter" data-filter=".check3" type="checkbox" id="checkbox3">
+                            <label class="checkbox-label" for="checkbox3">Option 3</label>
+                        </li>
+                    </ul> <!-- cd-filter-content -->
+                </div> <!-- cd-filter-block -->
+
+                <div class="cd-filter-block">
+                    <h4>Select</h4>
+
+                    <div class="cd-filter-content">
+                        <div class="cd-select cd-filters">
+                            <select class="filter" name="selectThis" id="selectThis">
+                                <option value="">Choose an option</option>
+                                <option value=".option1">Option 1</option>
+                                <option value=".option2">Option 2</option>
+                                <option value=".option3">Option 3</option>
+                                <option value=".option4">Option 4</option>
+                            </select>
+                        </div> <!-- cd-select -->
+                    </div> <!-- cd-filter-content -->
+                </div> <!-- cd-filter-block -->
+
+                <div class="cd-filter-block">
+                    <h4>Radio buttons</h4>
+
+                    <ul class="cd-filter-content cd-filters list">
+                        <li>
+                            <input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+                            <label class="radio-label" for="radio1">All</label>
+                        </li>
+
+                        <li>
+                            <input class="filter" data-filter=".radio2" type="radio" name="radioButton" id="radio2">
+                            <label class="radio-label" for="radio2">Choice 2</label>
+                        </li>
+
+                        <li>
+                            <input class="filter" data-filter=".radio3" type="radio" name="radioButton" id="radio3">
+                            <label class="radio-label" for="radio3">Choice 3</label>
+                        </li>
+                    </ul> <!-- cd-filter-content -->
+                </div> <!-- cd-filter-block -->
+            </form>
+
+            <a href="#0" class="cd-close">Close</a>
+        </div> <!-- cd-filter -->
+
+        <a href="#0" class="cd-filter-trigger">Filters</a>
         <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user
             experience for all your visitors.</p>
     </div>
 </main>
+
+<script th:src="@{js/jquery-2.1.1.js}"></script>
+<script th:src="@{js/jquery.mixitup.min.js}"></script>
+<script th:src="@{js/main.js}"></script> <!-- Resource jQuery -->
+
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}"
         src="/static/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}"
