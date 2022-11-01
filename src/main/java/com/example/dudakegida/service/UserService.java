@@ -27,4 +27,6 @@ public interface UserService {
     long getChosenPetId();
     //method for admin to find users that want pets and waiting for confirming
     List<User> findUsersById();
+
+
 }

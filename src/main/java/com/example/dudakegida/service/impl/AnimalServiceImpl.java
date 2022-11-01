@@ -64,13 +64,13 @@ public class AnimalServiceImpl implements AnimalService {
                 .filter(pet -> pet.getAnimal_status().equals(AnimalStatus.AFFORDABLE))
                 .toList();
         if(!animals.isEmpty() && animals.size()>=3) {
-            Collections.shuffle(animals);
-            List<Animal> result = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                result.add(animals.get(i));
-            }
-            System.out.println(result);
-            return result;
+//            Collections.shuffle(animals);
+//            Animal[] animals1 = new Animal[3];
+//            for (int i = 0; i < 3; i++) {
+//                animals1[i] = animals.get(i);
+//            }
+//            List<Animal> result = new ArrayList<>(Arrays.asList(animals1));
+            return animals;
         }else{
             return new ArrayList<>();
         }
@@ -92,6 +92,11 @@ public class AnimalServiceImpl implements AnimalService {
         return "/images/uploadedImg/" + imageFile.getOriginalFilename();
     }
 
+    @Override
+    public void deletePetsByIdIfTaken(Long id) {
+        animalRepository.deleteCheckingPetWhenConfirme(id);
+    }
+
 //    @Override
 //    public List<User> findUserAnimalWanted(Authentication authentication) {
 //        List<User> list = new ArrayList<>();
@@ -111,6 +116,7 @@ public class AnimalServiceImpl implements AnimalService {
         System.out.println("hello: " + animalRepository.findAll());
         return animalRepository.findAll();
     }
+
 
 
 }

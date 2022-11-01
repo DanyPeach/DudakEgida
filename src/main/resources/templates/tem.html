@@ -96,13 +96,13 @@
                                                                               th:href="@{/cart/showMyCart}">Cart</a>
                     </li>
 
-                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
+                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" th:href="@{/user/showProducts}" data-toggle="dropdown">MyEgida</a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/egida/myPets}">MyPets</a></li>
-                            <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
+                            <li><a th:href="@{/egida/}">MyShops</a></li>
                         </ul>
                     </li>
-                    <li><a class="section-scroll" href="#contact">News</a></li>
+                    <li><a class="section-scroll" th:href="@{/forum/showForum}">News</a></li>
                 </ul>
             </div>
         </div>
@@ -206,6 +206,7 @@
                     <div th:unless="${pet.animal_status == 'TAKEN'}">
                         <img width="256" height="256" th:src="${pet.getImgURL()}" alt="photo conformation"
                              style="object-fit: cover; width: 256px; height: 240px;"/>
+                        <br>
                         <a th:text="${pet.animalName}" th:href="@{/user/allpets}">Name: </a>
                         <span th:text="${pet.sex}">sex</span>
                         <br>

@@ -1,6 +1,7 @@
 package com.example.dudakegida.service.impl;
 
 import com.example.dudakegida.model.Cart;
+import com.example.dudakegida.model.CartItemsStatus;
 import com.example.dudakegida.model.PetFood;
 import com.example.dudakegida.model.User;
 import com.example.dudakegida.repository.CartRepository;
@@ -33,6 +34,7 @@ public class CartServiceImpl implements CartService {
         if (!productList.contains(petFood)) {
             Cart cart = new Cart(user.getId(), petFood);
             cart.setQuantity(cart.getQuantity()+1);
+            cart.setCartItemsStatus(CartItemsStatus.INCART);
             cartRepository.save(cart);
         }
     }
@@ -65,7 +67,8 @@ public class CartServiceImpl implements CartService {
     public double getTotalPriceOfUserCart(User user) {
         double totalPrice = 0;
 
-        List<Cart> list = cartRepository.findCartByUserId(user.getId());
+        List<Cart> list = cartRepository.findCartByUserId(user.getId()).stream()
+                .filter(p -> p.getCartItemsStatus().equals(CartItemsStatus.INCART)).toList();
         List<PetFood> list1 = formatingCartToProduct(list);
 
         for(int i = 0; i< list1.size(); i++){

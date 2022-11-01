@@ -38,6 +38,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView registration(@ModelAttribute User user){
         ModelAndView modelAndView = new ModelAndView();
+        user.setBalance(0);
         userService.save(user);
         modelAndView.setViewName("tem");
         return modelAndView;

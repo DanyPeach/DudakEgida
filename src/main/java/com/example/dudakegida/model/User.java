@@ -49,6 +49,9 @@ public class User {
     @NotNull
     private String email;
 
+    @NotNull
+    private double balance;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dayBirth;
 

@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en-US" dir="ltr">
+
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>EGIDA | LOGIN</title>
+    <title>EGIDA | TMS DUDAK</title>
     <!--
     Favicons
     =============================================
@@ -56,51 +56,38 @@
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
 <main>
 
-
-
-
-
-    <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">EGIDA DUDAK</a>
             </div>
             <div class="collapse navbar-collapse" id="custom-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/user/home}">Home</a></li>
-                    <li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/showProduct/{type}(type=9)}" data-toggle="dropdown">Shop</a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="tem.jsp" >Home</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Headers</a>
 
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Pages</a>
+
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Portfolio</a>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Headers</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Static Image Header</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="index_mp_fullscreen_static.html">Fullscreen</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Features</a>
 
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
-                                            th:href="@{/profile}">Profile</a></li>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Shop</a>
 
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
-                    <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/userConfirm}">Confirm pets</a></li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
-                                                                              th:href="@{/logout}">Logout</a>
                     </li>
-
-                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/egida/myPets}">MyPets</a></li>
-                            <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
-                                                                              th:href="@{/user/addbalance}" th:text="${userBalance}">Logout</a>
-                    </li>
-                    <li><a class="section-scroll" th:href="@{/forum/showForum}">News</a></li>
                 </ul>
             </div>
         </div>
@@ -115,7 +102,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
-                        <h1 class="module-title font-alt mb-0">Login</h1>
+                        <h1 class="module-title font-alt mb-0">Add news</h1>
                     </div>
                 </div>
             </div>
@@ -126,27 +113,45 @@
             <div class="container">
                 <div class="row" style="display: flex; flex-direction: row; align-items: center; text-align: center">
                     <div class="forma" style="margin: 0 auto">
-                        <h4 class="font-alt">Login</h4>
+                        <h4 class="font-alt">Register</h4>
                         <hr class="divider-w mb-10">
+                        <form class="form"  th:action="@{/forum/addMess}" th:method="POST" th:object="${message}" style="padding: 0 200px;">
+                            <input type="hidden" name="command" value="registration">
+                            <div class="form-group">
+                                <input class="form-control" name="title" placeholder="news title" required  style="width: 200px"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="post" placeholder="type news here" required  style="width: 200px"/>
+                            </div>
 
-                        <form class="form"  th:action="@{/new/login}" method="POST" style="padding: 0 200px;">
-<!--                            <input type="hidden" name="command" value="login">-->
                             <div class="form-group">
-                                <input class="form-control" id="login" type="text" name="username" placeholder="Username" style="width: 200px"/>
+                                <p><select name="messageType">
+                                    <option value="INFO">info</option>
+                                    <option value="SOS">sos</option>
+                                    <option value="FINDING">finding</option>
+                                    <option value="OVEREXPOSURE">overexpousere</option>
+                                </select>
                             </div>
+
+<!--                            <div class="form-group">-->
+<!--                                <input class="form-control" enctype="multipart/form-data" type="file" name="imageFile" />-->
+<!--                            </div>-->
+
                             <div class="form-group">
-                                <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="width: 200px"/>
+                                <input class="btn btn-block btn-round btn-b" type="submit" value="Submit" />
                             </div>
-                            <div class="form-group">
-                                <input class="btn btn-round btn-b" type="submit" value="Submit" />
-                            </div>
-                            <div class="form-group"><a href="">Forgot Password?</a></div>
+                            <input class="signup-button" type="submit" value="Submit" />
+
+                            <input type="hidden" name="command" value="registration">
+
                         </form>
-
                     </div>
                 </div>
             </div>
         </section>
+
+
+
         <div class="module-small bg-dark">
             <div class="container">
                 <div class="row">

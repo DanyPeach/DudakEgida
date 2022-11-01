@@ -27,9 +27,6 @@ public class UserServiceImpl implements UserService {
 
     private long chosen_pet_id = 0;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     public UserServiceImpl(UserRepository userRepository, AnimalService animalRepository) {
         this.userRepository = userRepository;
         this.animalService = animalRepository;
@@ -49,7 +46,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setActive(true);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

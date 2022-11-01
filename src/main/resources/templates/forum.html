@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Egida | Dudak TMS</title>
+    <title>Egida | forum</title>
     <!--
     Favicons
     =============================================
@@ -56,7 +56,10 @@
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
 
 
+
+
 <main>
+
     <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
         <div class="container">
             <div class="navbar-header">
@@ -64,8 +67,18 @@
             </div>
             <div class="collapse navbar-collapse" id="custom-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#totop">Home</a></li>
-                    <li><a class="section-scroll" href="#works">Works</a></li>
+                    <li><a th:href="@{/user/home}">Home</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/showProduct/{type}(type=9)}" data-toggle="dropdown">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a></li>
+
+                        </ul>
+                    </li>
                     <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
 
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
@@ -73,39 +86,56 @@
 
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
+                    <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/userConfirm}">Confirm pets</a></li>
                     <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
                                                                               th:href="@{/logout}">Logout</a>
                     </li>
+
+                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/egida/myPets}">MyPets</a></li>
+                            <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="section-scroll" href="#contact">News</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="features-item">
-        <div class="features-icon"><span class="icon-lightbulb"></span></div>
-        <br>
-        <h2 class="features-title font-alt">All Users that are waiting for your confirm</h2>
-        <h3 class="features-title font-alt">To confirm Pet please click on a button with animl's name</h3>
-        <div style="display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,250px); margin: 30px 30px">
-            <div th:each="user : ${usersThatWantPet}" class="all-pets-list" style="padding-bottom: 150px;" >
-                    <h2 th:text="${user.firstName}">Name: </h2>
-                    <p th:text="${user.lastName}">Last Name: </p>
-                    <span th:text="${user.phoneNumber}">phone:</span>
-                    <span th:text="${user.address}">adress</span>
-                    <br>
-                <p>the wished animal is:</p>
-<!--                <h3 th:text="${user.animalUserWant}"></h3>-->
-                <div th:each="pets : ${user.animalUserWant}" class="all-pets-list" style="padding-bottom: 10px;" >
-                    <th:block th:if="${pets.animal_status.name != 'TAKEN'}">
-                    <a th:text="${pets.animal_type}" th:href="@{/admin/confirmation/{id}/{userid}(id=${pets.animalId}, userid=${user.id})}" style="font-size: 15px">Name: </a>
-                    <a th:text="${pets.animalName}" style="font-size: 15px">Last Name: </a>
-                    </th:block>
+<div style="text-align: center">
+    <h1>Welcome to EGIDA NOW</h1>
+    <a class="btn btn-d btn-round" sec:authorize="hasAuthority('ADMIN')" th:href="@{/forum/addMessPage}">Add post</a>
+    </div>
+    <p style="text-align: center; font-size: 60px;" th:if="${allMess.isEmpty()}">No news for now</p>
+
+    <div th:if="${not #lists.isEmpty(allMess)}">
+        <div class="features-item">
+            <div style="display: grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(1,500px); margin: 30px 30px; text-align: center; padding-top: 80px;">
+                <div th:each="news : ${allMess}" class="all-pets-list" style="padding-bottom: 10px; align-items: center;
+
+    ">
+                <div style="display: flex; flex-direction: row; justify-content: space-around">
+                    <h2 th:text="${news.title}" style="margin: 0px;">title:  </h2>
+                    <blockquote th:text="${news.time}" style="margin-bottom: 0px; color: grey">time: </blockquote>
+                </div>
+                <div style="display: flex; flex-direction: column; text-align: center">
+                    <p th:text="${news.partOfMessage}" style="width: 500px; margin: 0 auto; padding-top: 20px">mark</p>
+                    <a>Load more</a>
+                </div>
+                </div>
+                <div style="text-align: center">
+<!--                    <img width="256" height="256" th:src="${news.getImgURL()}" alt="photo conformation"-->
+<!--                         style="object-fit: cover; width: 256px; height: 240px;"/>-->
+
                 </div>
             </div>
+            <hr>
         </div>
+
         <p style="padding-top: 50px">Careful attention to detail and clean, well structured code ensures a smooth user experience for all your visitors.</p>
+
     </div>
 </main>
-
 
 
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>

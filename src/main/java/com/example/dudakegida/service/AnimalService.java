@@ -20,5 +20,5 @@ public interface AnimalService {
 
     String saveImg(MultipartFile imageFile) throws IOException;
 //    List<User> findUserAnimalWanted(Authentication authentication);
-
+    void deletePetsByIdIfTaken(Long id);
 }

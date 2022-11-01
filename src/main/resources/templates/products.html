@@ -91,7 +91,7 @@
                                                                               th:href="@{/logout}">Logout</a>
                     </li>
 
-                    <li><a class="section-scroll" href="#news">News</a></li>
+                    <li><a class="section-scroll" th:href="@{/forum/showForum}">News</a></li>
                     <li><a class="section-scroll" href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -121,18 +121,14 @@
                         <h2 th:text="${food.name}">Name: </h2>
                         <p th:text="${food.price}">Age: </p>
 
-                        <span th:text="${food.foodType}">type</span>
-
-                        <span th:text="${food.mark}">sex</span>
+                        <span th:text="${food.getFoodType()}">type</span>
                         <br>
-                        <a th:href="@{/user/moreInfoAboutPet/{food_id}(food_id=${food.id})}">More info</a>
+                        <span th:text="${food.getMark()}">sex</span>
+                        <br>
+                        <a th:href="@{/user/moreInfoAboutPet/{food_id}(food_id=${food.getId()})}">More info</a>
                         <a sec:authorize="isAuthenticated()"
-                               th:href="@{/cart/takeProduct/{product_id}/(product_id=${food.id})}">Add to cart</a>
+                               th:href="@{/cart/takeProduct/{product_id}/(product_id=${food.getId()})}">Add to cart</a>
                         <br>
-                        <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{/admin/hide/{food_id}(food_id=${food.id})}">hide</a>
-                        <a sec:authorize="hasAuthority('ADMIN')"
-                           th:href="@{admin/deleteAnimal/{food_id}(food_id=${food.id})}">mark as taken</a>
                         <br>
                     </div>
             </div>

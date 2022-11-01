@@ -18,6 +18,9 @@ public class Cart {
 
     private int quantity;
 
+    @Column(name = "cart_status")
+    @Enumerated
+    private CartItemsStatus cartItemsStatus;
 
     @ManyToOne
     @JoinColumn(name = "pet_food_id", referencedColumnName = "id")

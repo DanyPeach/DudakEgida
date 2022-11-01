@@ -2,6 +2,7 @@ package com.example.dudakegida.controller;
 
 import com.example.dudakegida.model.*;
 import com.example.dudakegida.service.AnimalService;
+import com.example.dudakegida.service.CartService;
 import com.example.dudakegida.service.ProductService;
 import com.example.dudakegida.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -18,12 +19,13 @@ public class UserController {
     private final UserService userService;
     private final AnimalService animalService;
     private final ProductService productService;
+    private final CartService cartService;
 
-
-    public UserController(UserService userService, AnimalService animalService, ProductService productService) {
+    public UserController(UserService userService, AnimalService animalService, ProductService productService, CartService cartService) {
         this.userService = userService;
         this.animalService = animalService;
         this.productService = productService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/registrationPage")
@@ -89,56 +91,74 @@ public class UserController {
         return modelAndView;
     }
 
-//    @GetMapping("/takePet/{pet_id}")
-//    public ModelAndView takePet(@PathVariable String pet_id, Authentication authentication){
-//        ModelAndView modelAndView = new ModelAndView();
-//        userService.setChosen_pet_id(Long.decode(pet_id));
-//        modelAndView.setViewName("confirmePet");
-//        return modelAndView;
-//    }
-//
-//    @PostMapping("/confirmePetPassword")
-//    public ModelAndView confirme(@ModelAttribute User user, Authentication authentication){
-//        ModelAndView modelAndView = new ModelAndView();
-//        if(userService.confirmeChosenPet(user, authentication)){
-//            userService.takeChosenPet(userService.getChosenPetId(), authentication);
-//            modelAndView.addObject("randomThree", animalService.findRandomThree());
-//            modelAndView.setViewName("tem");
-//        }else{
-//            modelAndView.setViewName("");
-//        }
-//        return modelAndView;
-//    }
+    @GetMapping("/addbalance")
+    public ModelAndView addBalancePage(ModelAndView modelAndView, Authentication authentication){
+        modelAndView.setViewName("balance");
+        return modelAndView;
+    }
 
-//    @GetMapping("/myPets")
-//    public ModelAndView myPets(Authentication authentication){
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("userPets",
-//                animalService.findPetsByUserId(getUser(authentication).getId()));
-//        modelAndView.setViewName("UserPets");
-//        return modelAndView;
-//    }
+    @PostMapping("/addbalance")
+    public ModelAndView addBalance(ModelAndView modelAndView, Authentication authentication,
+                                   @RequestParam(name = "money") String money){
+        User user = getUser(authentication);
+        user.setBalance(user.getBalance() + Double.parseDouble(money));
+        userService.save(user);
+        Map<PetFood, Integer> petFoodMap = getMap(authentication);
+        modelAndView.addObject("userCarts", petFoodMap);
+        modelAndView.addObject("userBalance", getUser(authentication).getBalance());
+        modelAndView.addObject("totalPrice", cartService.getTotalPriceOfUserCart(getUser(authentication)));
+        modelAndView.setViewName("cart");
+        return modelAndView;
+    }
+
+    @GetMapping("/byeItems")
+    public ModelAndView byeItems(ModelAndView modelAndView, Authentication authentication){
+        User user = getUser(authentication);
+        user.setBalance(user.getBalance()-cartService.getTotalPriceOfUserCart(getUser(authentication)));
+        List<Cart> cartList = cartService.findCartsByUsername(getUser(authentication));
+        for(var i : cartList){
+            i.setCartItemsStatus(CartItemsStatus.SELL);
+            cartService.update(i);
+        }
+        List<Cart> res = cartService.findCartsByUsername(getUser(authentication))
+                .stream()
+                .filter(p -> p.getCartItemsStatus().equals(CartItemsStatus.SELL))
+                .toList();
+        List<PetFood> petFoodList =
+                cartService.formatingCartToProduct(res);
+        modelAndView.addObject("userproducts", petFoodList);
+        modelAndView.addObject("time", LocalDate.now().plusDays(2));
+        modelAndView.setViewName("userproducts");
+        return modelAndView;
+    }
+
+    @GetMapping("/showProducts")
+    public ModelAndView showUserProductsPage(ModelAndView modelAndView, Authentication authentication){
+        List<Cart> res = cartService.findCartsByUsername(getUser(authentication))
+                .stream()
+                .filter(p -> p.getCartItemsStatus().equals(CartItemsStatus.SELL))
+                .toList();
+        List<PetFood> petFoodList =
+                cartService.formatingCartToProduct(res);
+        modelAndView.addObject("userproducts", petFoodList);
+        modelAndView.addObject("time", LocalDate.now().plusDays(2));
+        modelAndView.setViewName("userproducts");
+        return modelAndView;
+    }
 
     private User getUser(Authentication authentication){
         String username = authentication.getName();
         return userService.findByLogin(username);
     }
 
-//    @GetMapping("/pickPet/{id}")
-//    public ModelAndView pickPetForUser(ModelAndView modelAndView, @PathVariable long id, @ModelAttribute User user){
-//        Animal animal = animalService.findById(id);
-//        modelAndView.addObject("chosenPet", animal);
-//        List<Animal> userpets = user.getPets();
-//        userpets.add(animal);
-//        user.setPets(userpets);
-//        modelAndView.setViewName("");
-//        return modelAndView;
-//    }
 
-
-//    @ModelAttribute
-//    public void addAttributes(Model model){
-//        model.addAttribute("listOfPets", new ArrayList<Animal>());
-//        model.addAttribute("user", new User());
-//    }
+private Map<PetFood, Integer> getMap(Authentication authentication) {
+    List<Cart> listCart = cartService.findCartsByUsername(getUser(authentication));
+    List<PetFood> petFoodList = cartService.formatingCartToProduct(listCart);
+    Map<PetFood, Integer> petFoodMap = new HashMap<>();
+    for(int i = 0; i<listCart.size(); i++){
+        petFoodMap.put(petFoodList.get(i), listCart.get(i).getQuantity());
+    }
+    return petFoodMap;
+}
 }

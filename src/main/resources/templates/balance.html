@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en-US" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
+    Document Title
+    =============================================
+    -->
+    <title>Egida | Balance</title>
+    <!--
+    Favicons
+    =============================================
+    -->
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-icon-57x57.png}">
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/images/favicons/apple-icon-60x60.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/favicons/apple-icon-76x76.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-icon-114x114.png}">
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/favicons/apple-icon-120x120.png}">
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-icon-144x144.png}">
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/favicons/apple-icon-152x152.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/favicons/apple-icon-180x180.png}">
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/favicons/android-icon-192x192.png}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicons/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/images/favicons/favicon-96x96.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicons/favicon-16x16.png}">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--
+    Stylesheets
+    =============================================
+
+    -->
+    <!-- Default stylesheets-->
+    <link th:href="@{/lib/bootstrap/dist/css/bootstrap.min.css}" href="/static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template specific stylesheets-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Volkhov:400i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link th:href="@{/lib/animate.css/animate.css}" href="/static/lib/animate.css/animate.css" rel="stylesheet">
+    <link th:href="@{/lib/components-font-awesome/css/font-awesome.min.css}" href="/static/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/lib/et-line-font/et-line-font.css}" href="/static/lib/et-line-font/et-line-font.css" rel="stylesheet">
+    <link th:href="@{/lib/flexslider/flexslider.css}" href="/static/lib/flexslider/flexslider.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.carousel.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:href="@{/lib/owl.carousel/dist/assets/owl.theme.default.min.css}" href="/static/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link th:href="@{/lib/magnific-popup/dist/magnific-popup.css}" href="/static/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <link th:href="@{/lib/simple-text-rotator/simpletextrotator.css}" href="/static/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
+    <!-- Main stylesheet and color file-->
+    <link th:href="@{/css/style.css?version=51}" href="/static/css/style.css" rel="stylesheet">
+    <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
+
+    <style>
+        .credit-card {
+            width: 360px;
+            height: 400px;
+            margin: 60px auto 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            box-shadow: 1px 2px 3px 0 rgba(0,0,0,.10);
+        }
+
+        .form-header {
+            height: 60px;
+            padding: 20px 30px 0;
+            border-bottom: 1px solid #e1e8ee;
+        }
+
+        .form-body {
+            height: 340px;
+            padding: 30px 30px 20px;
+        }
+
+        .title {
+            font-size: 18px;
+            margin: 0;
+            color: #5e6977;
+        }
+
+        .card-number,
+        .cvv-input input,
+        .month select,
+        .year select {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 14px;
+        }
+
+        .card-number,
+        .month select,
+        .year select {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 14px;
+        }
+
+        .card-number,
+        .cvv-details,
+        .cvv-input input,
+        .month select,
+        .year select {
+            opacity: .7;
+            color: #86939e;
+        }
+
+        .card-number {
+            width: 100%;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+        }
+
+        .month select,
+        .year select {
+            width: 145px;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+        }
+
+        .month select {
+            float: left;
+        }
+
+        .year select {
+            float: right;
+        }
+
+        .cvv-input input {
+            float: left;
+            width: 145px;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .cvv-details {
+            font-size: 12px;
+            font-weight: 300;
+            line-height: 16px;
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .cvv-details p {
+            margin-top: 6px;
+        }
+
+        .paypal-btn,
+        .proceed-btn {
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            border-color: transparent;
+            border-radius: 6px;
+        }
+
+        .proceed-btn {
+            margin-bottom: 10px;
+            background: #7dc855;
+        }
+
+        .paypal-btn a,
+        .proceed-btn a {
+            text-decoration: none;
+        }
+
+        .proceed-btn a {
+            color: #fff;
+        }
+
+        .paypal-btn a {
+            color: rgba(242, 242, 242, .7);
+        }
+
+        .paypal-btn {
+            padding-right: 95px;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+
+
+
+
+<main>
+
+    <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">EGIDA DUDAK</a>
+            </div>
+            <div class="collapse navbar-collapse" id="custom-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/user/home}">Home</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/showProduct/{type}(type=9)}" data-toggle="dropdown">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a></li>
+                            <li><a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
+
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
+                                            th:href="@{/profile}">Profile</a></li>
+
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/new/login}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/registrationPage}">Sing Up</a></li>
+                    <li class="nav-item"><a class="nav-link" sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin/userConfirm}">Confirm pets</a></li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+                                                                              th:href="@{/logout}">Logout</a>
+                    </li>
+
+                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/egida/myPets}">MyPets</a></li>
+                            <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+                                                                              th:href="@{/user/addbalance}" th:text="${userBalance}">Logout</a>
+                    </li>
+                    <li><a class="section-scroll" th:href="@{/forum/showForum}">News</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <p>slay</p>
+
+</main>
+<br>
+<div style="display: flex; justify-content: center;  margin-top: 50px;">
+<form   th:action="@{/user/addbalance}" th:method="POST" th:object="${message}" style="text-align: center;">
+    <div class="cvv-input">
+        <input type="text" name="money" placeholder="your money">
+    </div>
+    <div class="form-group">
+        <input class="btn btn-block btn-round btn-b" type="submit" value="Submit" />
+    </div>
+</form>
+</div>
+<br>
+<form class="credit-card">
+
+    <div class="form-header">
+        <h4 class="title">Credit card detail</h4>
+    </div>
+
+    <div class="form-body">
+        <!-- Card Number -->
+        <input type="text" class="card-number" placeholder="Card Number">
+
+        <!-- Date Field -->
+        <div class="date-field">
+            <div class="month">
+                <select name="Month">
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="march">March</option>
+                    <option value="april">April</option>
+                    <option value="may">May</option>
+                    <option value="june">June</option>
+                    <option value="july">July</option>
+                    <option value="august">August</option>
+                    <option value="september">September</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+            </div>
+            <div class="year">
+                <select name="Year">
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Card Verification Field -->
+        <div class="card-verification">
+            <div class="cvv-input">
+                <input type="text" placeholder="CVV">
+            </div>
+            <div class="cvv-input">
+                <input type="text" name="money" placeholder="your money">
+            </div>
+            <div class="cvv-details">
+                <p>3 or 4 digits usually found <br> on the signature strip</p>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>
+        <button type="submit" class="paypal-btn"><a href="#">Pay With</a></button>
+    </div>
+</form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script src="https://use.fontawesome.com/f1e0bf0cbc.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/wow/dist/wow.js}" src="/static/lib/wow/dist/wow.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js}" src="/static/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/isotope/dist/isotope.pkgd.js}" src="/static/lib/isotope/dist/isotope.pkgd.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/imagesloaded/imagesloaded.pkgd.js}" src="/static/lib/imagesloaded/imagesloaded.pkgd.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/flexslider/jquery.flexslider.js}" src="/static/lib/flexslider/jquery.flexslider.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/owl.carousel/dist/owl.carousel.min.js}" src="/static/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/smoothscroll.js}" src="/static/lib/smoothscroll.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/magnific-popup/dist/jquery.magnific-popup.js}" src="/static/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+<script type="text/javascript" th:src="@{/styles/lib/simple-text-rotator/jquery.simple-text-rotator.min.js}" src="/static/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
+<script type="text/javascript" th:src="@{/styles/js/plugins.js}" src="/static/js/plugins.js"></script>
+<script type="text/javascript" th:src="@{/styles/js/main.js}" src="/static/js/main.js"></script>
+</body>
+</html>

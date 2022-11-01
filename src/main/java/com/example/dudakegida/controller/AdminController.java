@@ -64,8 +64,8 @@ public class AdminController {
         productService.saveImg(image);
         petFood.setImgURL(productService.saveImg(image));
         productService.save(petFood);
-        List<PetFood> list = productService.findAll();
-        modelAndView.addObject("foodList", list);
+        List<PetFood> listOfPets = productService.findAll();
+        modelAndView.addObject("foodList", listOfPets);
         modelAndView.setViewName("products");
         return modelAndView;
     }
@@ -104,8 +104,26 @@ public class AdminController {
         User user = userService.findById(userid).orElseThrow(RuntimeException::new);
         animal.setUser(user);
         animal.setAnimal_status(AnimalStatus.TAKEN);
+
+        List<User> users = userService.findUsersById();
+        List<User> slay = new ArrayList<>();
+        for(var i : users){
+            int q = 0;
+            for(var j : i.getAnimalUserWant()){
+                if(j.getAnimal_status().equals(AnimalStatus.TAKEN)){
+                    q++;
+                }
+            }
+            if(q!=i.getAnimalUserWant().size()){
+                slay.add(i);
+            }
+        }
+
+
         animalService.update(animal);
-        modelAndView.setViewName("tem");
+
+        modelAndView.addObject("usersThatWantPet", slay);
+        modelAndView.setViewName("ConfirmUserChose");
         return modelAndView;
     }
 

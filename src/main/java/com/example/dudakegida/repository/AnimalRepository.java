@@ -23,5 +23,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query(value = "SELECT animal_animal_id FROM pets_user_chose ", nativeQuery = true)
     Set<Long> findAnimalIdByChosenPets();
 
-
+    @Query(value = "DELETE pets_id, user_id FROM user_confirming WHERE animal_id=:animal_id ", nativeQuery = true)
+    void deleteCheckingPetWhenConfirme(@Param("animal_id") Long animal_id);
 }
