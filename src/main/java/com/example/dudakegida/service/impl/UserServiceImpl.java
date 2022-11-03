@@ -2,21 +2,17 @@ package com.example.dudakegida.service.impl;
 
 import com.example.dudakegida.model.Animal;
 import com.example.dudakegida.model.AnimalStatus;
+import com.example.dudakegida.model.Role;
 import com.example.dudakegida.model.User;
-import com.example.dudakegida.repository.AnimalRepository;
 import com.example.dudakegida.repository.UserRepository;
 import com.example.dudakegida.service.AnimalService;
 import com.example.dudakegida.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -24,12 +20,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AnimalService animalService;
+    private final PasswordEncoder passwordEncoder;
 
     private long chosen_pet_id = 0;
 
-    public UserServiceImpl(UserRepository userRepository, AnimalService animalRepository) {
+    public UserServiceImpl(UserRepository userRepository, AnimalService animalRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.animalService = animalRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -46,6 +44,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userRepository.findAll().isEmpty()){
+            user.setRole(new HashSet<>(List.of(Role.ADMIN, Role.MEMBER)));
+        }
         userRepository.save(user);
     }
 
@@ -103,6 +105,11 @@ public class UserServiceImpl implements UserService {
             }
         }
         return list;
+    }
+
+    @Override
+    public void update(User user) {
+        userRepository.save(user);
     }
 
     public Set<Long> getUsersIdThatWantPet(){

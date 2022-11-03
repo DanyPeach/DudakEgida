@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -56,5 +58,16 @@ public class MessageServiceImpl implements MessageService{
     @Override
     public List<Message> getListOfPostByType(String type) {
         return null;
+    }
+
+    @Override
+    public Message findById(Long id) {
+        return messageRepository.findById(id).orElse(new Message());
+    }
+
+    @Override
+    public List<Message> reverseList(List<Message> list) {
+        Collections.reverse(list);
+        return list;
     }
 }

@@ -33,6 +33,10 @@ public class Message {
     @Enumerated(EnumType.STRING)
     private MessageType messageType;
 
+    @Column(name = "post_stat")
+    @Enumerated
+    private MessageStatus messageStatus;
+
     public Long getId() {
         return id;
     }
@@ -65,13 +69,45 @@ public class Message {
         this.user = user;
     }
 
-//    public String getImgURL() {
-//        return imgURL;
-//    }
-//
-//    public void setImgURL(String imgURL) {
-//        this.imgURL = imgURL;
-//    }
+    public MessageStatus getMessageStatus() {
+        return messageStatus;
+    }
+
+    public void setMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getPartOfMessage() {
+        return partOfMessage;
+    }
+
+    public void setPartOfMessage(String partOfMessage) {
+        this.partOfMessage = partOfMessage;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
 
     @Override
     public boolean equals(Object o) {

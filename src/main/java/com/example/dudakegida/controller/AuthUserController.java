@@ -2,6 +2,7 @@ package com.example.dudakegida.controller;
 
 import com.example.dudakegida.model.User;
 import com.example.dudakegida.service.AnimalService;
+import com.example.dudakegida.service.MessageService;
 import com.example.dudakegida.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthUserController {
     private final UserService userService;
     private final AnimalService animalService;
+    private final MessageService messageService;
 
-    public AuthUserController(UserService userService, AnimalService animalService) {
+    public AuthUserController(UserService userService, AnimalService animalService, MessageService messageService) {
         this.userService = userService;
         this.animalService = animalService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/myPets")
@@ -44,7 +47,7 @@ public class AuthUserController {
             modelAndView.addObject("randomThree", animalService.findRandomThree());
             modelAndView.setViewName("tem");
         }else{
-            modelAndView.setViewName("");
+            modelAndView.setViewName("confirmePet");
         }
         return modelAndView;
     }

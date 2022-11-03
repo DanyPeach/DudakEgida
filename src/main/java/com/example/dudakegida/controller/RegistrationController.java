@@ -1,31 +1,30 @@
 package com.example.dudakegida.controller;
 
+import com.example.dudakegida.model.Animal;
 import com.example.dudakegida.model.User;
+import com.example.dudakegida.service.AnimalService;
+import com.example.dudakegida.service.MessageService;
 import com.example.dudakegida.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
+import java.util.List;
 
 @Configuration
 @RequestMapping("/new")
 public class RegistrationController {
     private final UserService userService;
+    private final MessageService messageService;
+    private final AnimalService animalService;
 
-    public RegistrationController(UserService userService) {
+    public RegistrationController(UserService userService, MessageService messageService, AnimalService animalService) {
         this.userService = userService;
+        this.messageService = messageService;
+        this.animalService = animalService;
     }
 
     @GetMapping("/registrationPage")
@@ -40,6 +39,8 @@ public class RegistrationController {
         ModelAndView modelAndView = new ModelAndView();
         user.setBalance(0);
         userService.save(user);
+        List<Animal> randomThree = animalService.findRandomThree();
+        modelAndView.addObject("randomThree", randomThree);
         modelAndView.setViewName("tem");
         return modelAndView;
     }

@@ -1,10 +1,7 @@
 package com.example.dudakegida.controller;
 
 import com.example.dudakegida.model.*;
-import com.example.dudakegida.service.AnimalService;
-import com.example.dudakegida.service.CartService;
-import com.example.dudakegida.service.ProductService;
-import com.example.dudakegida.service.UserService;
+import com.example.dudakegida.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +17,14 @@ public class UserController {
     private final AnimalService animalService;
     private final ProductService productService;
     private final CartService cartService;
+    private final MessageService messageService;
 
-    public UserController(UserService userService, AnimalService animalService, ProductService productService, CartService cartService) {
+    public UserController(UserService userService, AnimalService animalService, ProductService productService, CartService cartService, MessageService messageService) {
         this.userService = userService;
         this.animalService = animalService;
         this.productService = productService;
         this.cartService = cartService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/registrationPage")
@@ -50,6 +49,7 @@ public class UserController {
     @GetMapping("/home")
     public ModelAndView userList(ModelAndView modelAndView){
         List<Animal> randomThree = animalService.findRandomThree();
+
         modelAndView.addObject("randomThree", randomThree);
         modelAndView.setViewName("tem");
         return modelAndView;
@@ -102,7 +102,7 @@ public class UserController {
                                    @RequestParam(name = "money") String money){
         User user = getUser(authentication);
         user.setBalance(user.getBalance() + Double.parseDouble(money));
-        userService.save(user);
+        userService.update(user);
         Map<PetFood, Integer> petFoodMap = getMap(authentication);
         modelAndView.addObject("userCarts", petFoodMap);
         modelAndView.addObject("userBalance", getUser(authentication).getBalance());
@@ -111,16 +111,22 @@ public class UserController {
         return modelAndView;
     }
 
+
     @GetMapping("/byeItems")
     public ModelAndView byeItems(ModelAndView modelAndView, Authentication authentication){
         User user = getUser(authentication);
+        if(user.getBalance()-cartService.getTotalPriceOfUserCart(getUser(authentication))<0){
+            modelAndView.setViewName("balance");
+            return modelAndView;
+        }
         user.setBalance(user.getBalance()-cartService.getTotalPriceOfUserCart(getUser(authentication)));
+        userService.update(user);
         List<Cart> cartList = cartService.findCartsByUsername(getUser(authentication));
         for(var i : cartList){
             i.setCartItemsStatus(CartItemsStatus.SELL);
             cartService.update(i);
         }
-        List<Cart> res = cartService.findCartsByUsername(getUser(authentication))
+        List<Cart> res = cartService.findCartsByUsername(user)
                 .stream()
                 .filter(p -> p.getCartItemsStatus().equals(CartItemsStatus.SELL))
                 .toList();

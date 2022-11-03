@@ -118,6 +118,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public String checkBalance(User user) {
+        List<Cart> cart = cartRepository.findCartByUserId(user.getId());
+        double total = 0;
+        for(var i : cart){
+
+        }
+        return null;
+    }
+
+    @Override
     public void deleteCartByUsernameAndProductId(User user, long product_id) {
         Cart res = cartRepository.findAll().stream()
                 .filter(cart -> cart.getPetFood().getId() == product_id &&

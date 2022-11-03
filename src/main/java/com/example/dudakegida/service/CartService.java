@@ -31,4 +31,6 @@ public interface CartService {
     Cart findById(Long id);
 
     void update(Cart cart);
+
+    String checkBalance(User user);
 }

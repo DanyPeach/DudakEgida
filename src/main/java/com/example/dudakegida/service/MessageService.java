@@ -16,4 +16,8 @@ public interface MessageService {
     String cutPost(String post);
 
     List<Message> getListOfPostByType(String type);
+
+    Message findById(Long id);
+
+    List<Message> reverseList(List<Message> list);
 }

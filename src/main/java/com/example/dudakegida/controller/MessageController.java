@@ -1,6 +1,8 @@
 package com.example.dudakegida.controller;
 
 import com.example.dudakegida.model.Message;
+import com.example.dudakegida.model.MessageStatus;
+import com.example.dudakegida.model.MessageType;
 import com.example.dudakegida.model.User;
 import com.example.dudakegida.service.MessageService;
 import com.example.dudakegida.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -28,8 +31,22 @@ public class MessageController {
 
     @GetMapping("/showForum")
     public ModelAndView showForum(ModelAndView modelAndView){
-        List<Message> list = messageService.findAll();
+        List<Message> list = messageService.findAll()
+                .stream()
+                .filter(p -> p.getMessageStatus().equals(MessageStatus.CHECKED))
+                .filter(p -> p.getMessageType().equals(MessageType.FINDING) ||
+                        p.getMessageType().equals(MessageType.INFO) ||
+                        p.getMessageType().equals(MessageType.OVEREXPOSURE))
+                .toList();
+//        Collections.reverse(list);
+
+        List<Message> listSOS = messageService.findAll()
+                .stream()
+                .filter(p -> p.getMessageStatus().equals(MessageStatus.CHECKED))
+                .filter(p -> p.getMessageType().equals(MessageType.SOS))
+                .toList();
         modelAndView.addObject("allMess", list);
+        modelAndView.addObject("allMessSos", listSOS);
         modelAndView.setViewName("forum");
         return modelAndView;
     }
@@ -44,14 +61,15 @@ public class MessageController {
     public ModelAndView addPost(ModelAndView modelAndView, @ModelAttribute Message message,
                                 Authentication authentication) throws IOException {
         message.setUser(getUser(authentication));
-        message.setTime(LocalDateTime.now());
+        message.setTime(LocalDateTime.now().withNano(0));
         message.setPartOfMessage(messageService.cutPost(message.getMessage()));
+        message.setMessageStatus(MessageStatus.ONCHECK);
         messageService.save(message);
-        List<Message> list = messageService.findAll();
-        modelAndView.addObject("allMess", list);
-        modelAndView.setViewName("forum");
+        modelAndView.setViewName("ValidInfoMembers");
         return modelAndView;
     }
+
+
 
     @GetMapping("/showPostsByType/{type}")
     public ModelAndView showByType(ModelAndView modelAndView, @PathVariable String type){
@@ -64,6 +82,13 @@ public class MessageController {
     private User getUser(Authentication authentication){
         String username = authentication.getName();
         return userService.findByLogin(username);
+    }
+
+    @GetMapping("/showMore/{messid}")
+    public ModelAndView showMore(ModelAndView modelAndView, @PathVariable Long messid){
+        modelAndView.addObject("mess", messageService.findById(messid));
+        modelAndView.setViewName("forumPage");
+        return modelAndView;
     }
 
 

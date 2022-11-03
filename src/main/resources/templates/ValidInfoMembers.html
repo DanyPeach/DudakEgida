@@ -8,7 +8,7 @@
     Document Title
     =============================================
     -->
-    <title>Egida | forum</title>
+    <title>Egida | Dudak TMS</title>
     <!--
     Favicons
     =============================================
@@ -52,133 +52,12 @@
     <!-- Main stylesheet and color file-->
     <link th:href="@{/css/style.css?version=51}" href="/static/css/style.css" rel="stylesheet">
     <link id="color-scheme" th:href="@{/css/colors/default.css}"  href="/static/css/colors/default.css" rel="stylesheet">
-
-
-<style>
-    @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap");
-
-
-    .blog_post {
-        background: #fff;
-        max-width: 800px;
-        border-radius: 10px;
-        box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-        position: relative;
-    }
-
-
-    .container_copy {
-        padding: 6rem 4rem 5rem 4rem;
-    }
-
-    .img_pod {
-        height: 110px;
-        width: 110px;
-        background: linear-gradient(90deg, #ff9966, #ff5e62);
-        z-index: 10;
-        box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-        border-radius: 100%;
-        position: absolute;
-        left: -10%;
-        top: -13%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .img_pod_1 {
-        height: 110px;
-        width: 110px;
-        background: linear-gradient(90deg, #ff0000, #ff5e62);
-        z-index: 10;
-        box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-        border-radius: 100%;
-        position: absolute;
-        left: -10%;
-        top: -13%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    img {
-        height: 8.3rem;
-        width: 8.3rem;
-        position: relative;
-        border-radius: 100%;
-        box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
-        z-index: 1;
-    }
-
-    h3 {
-        margin: 0 0 0.5rem 0;
-        color: #999;
-        font-size: 1.25rem;
-    }
-
-    h1 {
-        margin: 0 0 1rem 0;
-        font-size: 2.5rem;
-        letter-spacing: 0.5px;
-        color: #333;
-    }
-
-    p {
-        margin: 0 0 4.5rem 0;
-        font-size: 1.5rem;
-        line-height: 1.45;
-        color: #333;
-    }
-
-    .btn_primary {
-        border: none;
-        outline: none;
-        background: linear-gradient(90deg, #ff9966, #ff5e62);
-        padding: 1.5rem 2rem;
-        border-radius: 50px;
-        color: white;
-        font-size: 1.2rem;
-        box-shadow: 1px 10px 2rem rgba(255, 94, 98, 0.5);
-        transition: all 0.2s ease-in;
-        text-decoration: none;
-    }
-
-    .btn_primary_1 {
-        border: none;
-        outline: none;
-        background: linear-gradient(90deg, #ff0000, #ff5e62);
-        padding: 1.5rem 2rem;
-        border-radius: 50px;
-        color: white;
-        font-size: 1.2rem;
-        box-shadow: 1px 10px 2rem rgba(255, 94, 98, 0.5);
-        transition: all 0.2s ease-in;
-        text-decoration: none;
-    }
-
-    .btn_primary:hover {
-        box-shadow: 0px 5px 1rem rgba(255, 94, 98, 0.5);
-    }
-
-    @media only screen and (max-width: 650px) {
-        body {
-            background-color: black;
-        }
-
-        .img_pod {
-
-        }
-    }
-
-</style>
 </head>
 <body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
-
-
-
-
 <main>
-
+    <!--    <div class="page-loader">-->
+    <!--        <div class="loader">Loading...</div>-->
+    <!--    </div>-->
     <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation" style="background: #0b0b0b">
         <div class="container">
             <div class="navbar-header">
@@ -187,17 +66,6 @@
             <div class="collapse navbar-collapse" id="custom-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/user/home}">Home</a></li>
-                    <li class="dropdown"><a class="dropdown-toggle" th:href="@{/product/showProduct/{type}(type=9)}" data-toggle="dropdown">Shop</a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/product/showProduct/{type}(type=0)}">Dog food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=1)}">Cat food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=2)}">Bird food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=3)}">Other food</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=4)}">Sweets</a></li>
-                            <li><a th:href="@{/product/showProduct/{type}(type=5)}">Stuff</a></li>
-
-                        </ul>
-                    </li>
                     <li><a class="section-scroll" th:href="@{/user/allpets}">Pets</a></li>
 
                     <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()"
@@ -210,87 +78,31 @@
                                                                               th:href="@{/logout}">Logout</a>
                     </li>
 
-                    <li class="dropdown" sec:authorize="isAuthenticated()"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">MyEgida</a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/egida/myPets}">MyPets</a></li>
                             <li><a href="index_mp_fullscreen_static.html">MyShops</a></li>
                         </ul>
                     </li>
-                    <li><a class="section-scroll" href="#contact">News</a></li>
+                    <li><a class="section-scroll" th:href="@{/forum/showForum}">News</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-<div style="text-align: center">
-    <h2>Welcome to EGIDA NOW</h2>
-    <a class="btn btn-d btn-round" sec:authorize="hasAuthority('MEMBER')" th:href="@{/forum/addMessPage}">Add post</a>
-    </div>
-    <p style="text-align: center; font-size: 60px;" th:if="${allMess.isEmpty()}">No news for now</p>
 
-<!--    <div th:if="${not #lists.isEmpty(allMess)}">-->
-<!--        <div class="features-item">-->
-<!--            <div style="display: grid; grid-template-columns: repeat(1,1fr); grid-template-rows: repeat(1,500px); margin: 30px 30px; text-align: center; padding-top: 80px;">-->
-<!--                <div th:each="news : ${allMess}" class="all-pets-list" style="padding-bottom: 10px; align-items: center;-->
+    <section class="module" id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h2 class="module-title font-alt">Your post in the process of validation!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!--    ">-->
-<!--                <div style="display: flex; flex-direction: row; justify-content: space-around">-->
-<!--                    <h2 th:text="${news.title}" style="margin: 0px;">title:  </h2>-->
-<!--                    <blockquote th:text="${news.time}" style="margin-bottom: 0px; color: grey">time: </blockquote>-->
-<!--                </div>-->
-<!--                <div style="display: flex; flex-direction: column; text-align: center">-->
-<!--                    <p th:text="${news.partOfMessage}" style="width: 500px; margin: 0 auto; padding-top: 20px">mark</p>-->
-<!--                    <a>Load more</a>-->
-<!--                </div>-->
-<!--                </div>-->
-<!--                <div style="text-align: center">-->
-<!--&lt;!&ndash;                    <img width="256" height="256" th:src="${news.getImgURL()}" alt="photo conformation"&ndash;&gt;-->
-<!--&lt;!&ndash;                         style="object-fit: cover; width: 256px; height: 240px;"/>&ndash;&gt;-->
 
-<!--                </div>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--        </div>-->
-
-    </div>
 </main>
-
-<div th:if="${not #lists.isEmpty(allMessSos)}" style="padding-top: 50px; padding-bottom: 50px;">
-    <div class="blog_post" th:each="news : ${allMessSos}" style="display: flex; margin: 0 auto;" >
-        <div class="img_pod_1">
-
-        </div>
-        <div class="container_copy">
-            <h3 th:text="${news.time}" >12 January 2019</h3>
-            <h1 th:text="${news.title}">CSS Positioning</h1>
-            <p th:text="${news.partOfMessage}">The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).</p>
-            <a class="btn_primary_1" th:href="@{/forum/showMore/{messid}(messid=${news.id})}">Read More</a>
-        </div>
-        <br>
-        <br>
-        <br>
-    </div>
-</div>
-
-<div th:if="${not #lists.isEmpty(allMess)}" style="padding-top: 50px; padding-bottom: 50px;">
-<div class="blog_post" th:each="news : ${allMess}" style="display: flex; margin: 0 auto;" >
-    <div class="img_pod">
-
-    </div>
-    <div class="container_copy">
-        <h3 th:text="${news.time}" >12 January 2019</h3>
-        <h1 th:text="${news.title}">CSS Positioning</h1>
-        <p th:text="${news.partOfMessage}">The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).</p>
-        <a class="btn_primary" th:href="@{/forum/showMore/{messid}(messid=${news.id})}">Read More</a>
-    </div>
-    <br>
-    <br>
-    <br>
-</div>
-</div>
-
-
-
-
 <script type="text/javascript" th:src="@{/styles/lib/jquery/dist/jquery.js}" src="/static/lib/jquery/dist/jquery.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/bootstrap/dist/js/bootstrap.min.js}" src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" th:src="@{/styles/lib/wow/dist/wow.js}" src="/static/lib/wow/dist/wow.js"></script>
@@ -305,5 +117,6 @@
 <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK2Axt8xiFYMBMDwwG1XzBQvEbYpzCvFU"></script>
 <script type="text/javascript" th:src="@{/styles/js/plugins.js}" src="/static/js/plugins.js"></script>
 <script type="text/javascript" th:src="@{/styles/js/main.js}" src="/static/js/main.js"></script>
+
 </body>
 </html>

@@ -28,5 +28,7 @@ public interface UserService {
     //method for admin to find users that want pets and waiting for confirming
     List<User> findUsersById();
 
+    void update(User user);
+
 
 }

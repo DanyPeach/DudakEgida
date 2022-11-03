@@ -46,7 +46,7 @@ public class WebSecurityConfiguration {
                 requestCache().disable().
                 csrf().disable().
                 authorizeHttpRequests(
-                        request -> request.antMatchers("/new/** ", "/user/**", "/product/**").permitAll()
+                        request -> request.antMatchers("/new/** ", "/user/**", "/product/**", "/forum/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(login -> login.loginPage("/new/login").permitAll().defaultSuccessUrl("/user/home"))
                 .logout()

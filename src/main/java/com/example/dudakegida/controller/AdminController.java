@@ -1,10 +1,8 @@
 package com.example.dudakegida.controller;
 
-import com.example.dudakegida.model.Animal;
-import com.example.dudakegida.model.AnimalStatus;
-import com.example.dudakegida.model.PetFood;
-import com.example.dudakegida.model.User;
+import com.example.dudakegida.model.*;
 import com.example.dudakegida.service.AnimalService;
+import com.example.dudakegida.service.MessageService;
 import com.example.dudakegida.service.ProductService;
 import com.example.dudakegida.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +22,13 @@ public class AdminController {
     private final AnimalService animalService;
     private final UserService userService;
     private final ProductService productService;
+    private final MessageService messageService;
 
-    public AdminController(AnimalService animalService, UserService userService, ProductService productService) {
+    public AdminController(AnimalService animalService, UserService userService, ProductService productService, MessageService messageService) {
         this.animalService = animalService;
         this.userService = userService;
         this.productService = productService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/addPage")
@@ -124,6 +125,32 @@ public class AdminController {
 
         modelAndView.addObject("usersThatWantPet", slay);
         modelAndView.setViewName("ConfirmUserChose");
+        return modelAndView;
+    }
+
+    @GetMapping("/adminValidPost/{messid}")
+    public ModelAndView adminValid(ModelAndView modelAndView, @PathVariable Long messid){
+        Message message = messageService.findById(messid);
+        message.setMessageStatus(MessageStatus.CHECKED);
+        message.setTime(LocalDateTime.now().withNano(0));
+        messageService.save(message);
+        List<Message> list = messageService.findAll()
+                .stream()
+                .filter(p -> p.getMessageStatus().equals(MessageStatus.CHECKED))
+                .toList();
+        modelAndView.addObject("allMess", list);
+        modelAndView.setViewName("forum");
+        return modelAndView;
+    }
+
+    @GetMapping("/viewValidPostsPage")
+    public ModelAndView viewValidPostsPage(ModelAndView modelAndView){
+        List<Message> list = messageService.findAll()
+                .stream()
+                .filter(p -> p.getMessageStatus().equals(MessageStatus.ONCHECK))
+                .toList();
+        modelAndView.addObject("allMess", list);
+        modelAndView.setViewName("AdminPostCheck");
         return modelAndView;
     }
 

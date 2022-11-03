@@ -62,14 +62,9 @@ public class AnimalServiceImpl implements AnimalService {
     public List<Animal> findRandomThree() {
         List<Animal> animals = findAll().stream()
                 .filter(pet -> pet.getAnimal_status().equals(AnimalStatus.AFFORDABLE))
+                .limit(3)
                 .toList();
         if(!animals.isEmpty() && animals.size()>=3) {
-//            Collections.shuffle(animals);
-//            Animal[] animals1 = new Animal[3];
-//            for (int i = 0; i < 3; i++) {
-//                animals1[i] = animals.get(i);
-//            }
-//            List<Animal> result = new ArrayList<>(Arrays.asList(animals1));
             return animals;
         }else{
             return new ArrayList<>();
